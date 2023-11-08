@@ -355,6 +355,7 @@
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/GameOver.cs"
 "Assets/Scripts/GameOverCamera.cs"
+"Assets/Scripts/MenuController.cs"
 "Assets/Scripts/PlayerController.cs"
 -langversion:9.0
 

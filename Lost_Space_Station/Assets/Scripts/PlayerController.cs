@@ -1,3 +1,6 @@
+//Author : Yuko Yamano
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
