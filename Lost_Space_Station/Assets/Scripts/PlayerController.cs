@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         return hasKey;
     }//-------------------------------
+
     public int health = 100;
 
     Scoring scoring;
