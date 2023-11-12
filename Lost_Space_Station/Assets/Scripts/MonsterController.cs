@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MonsterController : MonoBehaviour
+public class MonsterController : MonoBehaviour   //This is for small enemy movement
 {
     public StateMachine stateMachine;
     public StateMachine.State idle, chase, attack;
@@ -17,6 +17,7 @@ public class MonsterController : MonoBehaviour
 
     public float strength = 5; //[0,100]
     public float health = 100;
+    private float currentHealth;
     public float speed = 2; //2 m/s
 
     Scoring scoring;
@@ -25,7 +26,8 @@ public class MonsterController : MonoBehaviour
     PlayerController playerController;
     float timer = 0;
     public bool attacking = false;
-    public int damage = 10;
+    public int damage = 50;
+    
     public float attackRate = 4f; //attacks every 4 seconds
 
 
@@ -48,6 +50,10 @@ public class MonsterController : MonoBehaviour
         attack = stateMachine.CreateState("Attack");
         attack.onFrame = AttackOnFrame;
 
+        //For enemy's HP
+        currentHealth = health;
+
+        enemy = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -55,12 +61,37 @@ public class MonsterController : MonoBehaviour
     {
         stateMachine.Update();
         timer += Time.deltaTime;
+
+        
         if (health <= 0)
         {
             Die(); 
         }
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        // Check if the collision is with a bullet
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+           
+            TakeDamage(damage);
+
+            // Destroy the bullet on impact
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        scoring.score += damage;
+        // Check if the enemy's health has reached 0
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
     void IdleOnFrame()
     {
@@ -77,7 +108,7 @@ public class MonsterController : MonoBehaviour
     private void Idle()
     {
         //do nothing for now 
-        Debug.Log("Samell Enemy is Idling");
+        Debug.Log("Samell Enemy is in Idle state");
 
     }
 
@@ -164,7 +195,7 @@ public class MonsterController : MonoBehaviour
 
     public void Die()
     {
-        scoring.AddScore(killPoints);
+        //scoring.AddScore(killPoints);
         Destroy(this.gameObject);
     }
 }

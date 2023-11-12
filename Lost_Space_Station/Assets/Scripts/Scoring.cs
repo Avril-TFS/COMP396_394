@@ -9,7 +9,9 @@ public class Scoring : MonoBehaviour
     [Header("Score Properties")]
     public int score = 0;
     GameObject goScore;
+    GameObject goTimer;
     Text scoreText;
+    Text timerText;
 
     [Header("Time Properties")]
     public float timer = 0;
@@ -22,20 +24,27 @@ public class Scoring : MonoBehaviour
     {   
         goScore = GameObject.Find("textScore");
         scoreText = goScore.GetComponent<Text>();
+        goTimer = GameObject.Find("textTimer");
+        timerText = goTimer.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 2f)
-        {
-            //every 2 seconds add 20 pts to score
-            score += 20;
+        // Convert timer to minutes and seconds
+        int minutes = Mathf.FloorToInt(timer / 60);
+        int seconds = Mathf.FloorToInt(timer % 60);
+        
+        timerText.text = string.Format("TIMER: {0:00}:{1:00}", minutes, seconds);
+        //if (timer > 2f)
+        //{
+        //    //every 2 seconds add 20 pts to score
+        //    score += 20;
 
-            //reset timer 
-            timer = 0;
-        }
+        //    //reset timer 
+        //    timer = 0;
+        //}
         scoreText.text = "SCORE: " + score.ToString("#,0");
         if (Input.GetKeyUp(KeyCode.Escape) && isGameOver)
         {
