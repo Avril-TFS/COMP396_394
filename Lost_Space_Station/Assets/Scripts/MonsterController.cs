@@ -77,6 +77,7 @@ public class MonsterController : MonoBehaviour
     private void Idle()
     {
         //do nothing for now 
+        Debug.Log("Samell Enemy is Idling");
 
     }
 
@@ -120,6 +121,7 @@ public class MonsterController : MonoBehaviour
     }
     private void Attack()
     {
+        Debug.Log("Small enemy is close and enemy is attacking");
         //create timer so attack happens every x seconds 
         if (timer > attackRate)
         {
