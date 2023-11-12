@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"m_AlwaysRefresh":false,"showFog":true,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true,"showVisualEffectGraphs":true,"m_FxEnabled":true},"in2DMode":true,"pivot":{"x":931.0422973632813,"y":306.41943359375,"z":-0.9595491886138916},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"size":349.17864990234377,"orthographic":true}
+=======
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"m_AlwaysRefresh":false,"showFog":true,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true,"showVisualEffectGraphs":true,"m_FxEnabled":false},"in2DMode":false,"pivot":{"x":18.18461799621582,"y":6.982006072998047,"z":14.179110527038575},"rotation":{"x":0.01962260529398918,"y":-0.9017223119735718,"z":0.42992153763771059,"w":0.041157227009534839},"size":12.962810516357422,"orthographic":false}
+>>>>>>> Robot/Exit
