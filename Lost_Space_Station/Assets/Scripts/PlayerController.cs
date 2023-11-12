@@ -11,6 +11,18 @@ public class PlayerController : MonoBehaviour
     public Transform playerBody; // Reference to the player model 
     private Rigidbody rb;
 
+    // This is for keys---------------
+    public bool hasKey = false;
+
+    public void HasKey()
+    {
+        hasKey = true;
+    }
+    public bool CheckHasKey()
+    {
+        return hasKey;
+    }//-------------------------------
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
