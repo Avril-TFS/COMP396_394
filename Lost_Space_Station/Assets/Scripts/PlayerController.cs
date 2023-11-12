@@ -1,6 +1,7 @@
 //Author : Yuko Yamano
 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,11 +23,17 @@ public class PlayerController : MonoBehaviour
     {
         return hasKey;
     }//-------------------------------
+    public int health = 100;
+
+    Scoring scoring;
+    public int attackStrength = 20; 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerBody = transform.Find("PlayerBody"); 
+        playerBody = transform.Find("PlayerBody");
+        scoring = GameObject.Find("UI").GetComponent<Scoring>();
+
     }
 
     private void Update()
@@ -39,7 +46,20 @@ public class PlayerController : MonoBehaviour
         // Calculate the movement direction relative to the player's local space
         Vector3 movement = playerBody.TransformDirection(new Vector3(horizontalInput, 0, verticalInput)) * moveSpeed;
         rb.velocity = movement;
+
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
-  
+    private void Die()
+    {
+        scoring.GameOver();
+    }
+
+    public void Damage(int amount)
+    {
+        health -= amount;
+    }
 }
