@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+
     }
 
     private void Die()
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     public void Damage(int amount)
     {
+        scoring.DisplayDamage(amount);
         health -= amount;
+        scoring.health = health;
     }
 }

@@ -6,22 +6,34 @@ using UnityEngine.UI;
 
 public class Scoring : MonoBehaviour
 {
-    [Header("Score Properties")]
+    [Header("UI Properties")]
     public int score = 0;
     GameObject goScore;
     Text scoreText;
+    GameObject goHealth;
+    Text healthText;
+    public int health = 100;
+    public GameObject damgeUI;
+    public Text damageText;
+    public bool isDamaged = false;
+    public GameObject gameOver;
+    public bool isGameOver = false;
+
 
     [Header("Time Properties")]
     public float timer = 0;
 
-    public GameObject gameOver;
-    public bool isGameOver = false; 
+   
 
     // Start is called before the first frame update
     void Start()
     {   
         goScore = GameObject.Find("textScore");
         scoreText = goScore.GetComponent<Text>();
+
+        goHealth = GameObject.Find("textHealth");
+        healthText = goHealth.GetComponent<Text>();
+
     }
 
     // Update is called once per frame
@@ -33,10 +45,19 @@ public class Scoring : MonoBehaviour
             //every 2 seconds add 20 pts to score
             score += 20;
 
+            //reset damage to false after 2 sec
+            if (isDamaged)
+            {
+                isDamaged = false;
+                damgeUI.SetActive(false);
+
+            }
+
             //reset timer 
             timer = 0;
         }
         scoreText.text = "SCORE: " + score.ToString("#,0");
+        healthText.text = "HEALTH: " + health.ToString("#,0");
         if (Input.GetKeyUp(KeyCode.Escape) && isGameOver)
         {
             LOAD_MENU();
@@ -59,5 +80,12 @@ public class Scoring : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenuScene");
+    }
+    public void DisplayDamage(int amount)
+    {
+        damgeUI.SetActive(true);
+        damageText.text = "- " + amount.ToString("#,0");
+        isDamaged = true;
+
     }
 }
