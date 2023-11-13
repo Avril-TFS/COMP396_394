@@ -10,14 +10,18 @@ public class Scoring : MonoBehaviour
     public int score = 0;
     GameObject goScore;
     GameObject goTimer;
+    GameObject goMessage;
     Text scoreText;
     Text timerText;
+    Text messageText;
 
     [Header("Time Properties")]
     public float timer = 0;
 
     public GameObject gameOver;
-    public bool isGameOver = false; 
+    public bool isGameOver = false;
+
+    public GameObject gameClear;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,8 @@ public class Scoring : MonoBehaviour
         scoreText = goScore.GetComponent<Text>();
         goTimer = GameObject.Find("textTimer");
         timerText = goTimer.GetComponent<Text>();
+        goMessage = GameObject.Find("textMessage");
+        messageText = goMessage.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -50,6 +56,12 @@ public class Scoring : MonoBehaviour
         {
             LOAD_MENU();
         }
+        
+    }
+
+    public void sendMessageToUI(string message)
+    {
+        messageText.text = "Message: " + message;
     }
 
     public void AddScore(int amount)
@@ -63,6 +75,14 @@ public class Scoring : MonoBehaviour
         Time.timeScale = 0;
         isGameOver = true; 
 
+    }
+
+    public void GameClear()
+    {
+        //show gameClear screen
+        gameClear.SetActive(true);
+        //Slow down the scene
+        Time.timeScale = 0.5f;
     }
     public void LOAD_MENU()
     {

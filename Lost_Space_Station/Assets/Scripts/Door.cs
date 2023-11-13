@@ -40,6 +40,8 @@ public class Door : MonoBehaviour
         {
             scoring.score += bonusRewardPoint;
         }
-        
+
+        //Show the Game Clear screen
+        scoring.GameClear();
     }
 }

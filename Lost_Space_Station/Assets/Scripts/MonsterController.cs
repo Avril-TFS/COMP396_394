@@ -86,6 +86,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     {
         currentHealth -= damage;
         scoring.score += damage;
+        scoring.sendMessageToUI("Hit enemy");
         // Check if the enemy's health has reached 0
         if (currentHealth <= 0)
         {

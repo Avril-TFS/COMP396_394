@@ -336,8 +336,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303.5, y: -236.5}
-  m_SizeDelta: {x: 465, y: 268}
+  m_AnchoredPosition: {x: 346, y: -222}
+  m_SizeDelta: {x: 465, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &54459021
 MonoBehaviour:
@@ -372,14 +372,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WASD key to move
-
-    Mouse movement to change view
-
-    Space key to
-    shoot
-
-    Bonus point will be given for faster clear time'
+  m_Text: "Try to reach the exit by getting the keys to open the doors. Don't die
+    from the monsters.\n\nControls:\nWASD keys to move\nMove your mouse to look around\nLeft
+    click to shoot \nBonus points will be rewarded if you can beat the level under
+    a certain time"
 --- !u!222 &54459022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -814,7 +810,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303.5, y: -442.16666}
+  m_AnchoredPosition: {x: 346, y: -430}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &301271694
@@ -1690,8 +1686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 303.5, y: -45.833332}
-  m_SizeDelta: {x: 600, y: 70}
+  m_AnchoredPosition: {x: 346, y: -34}
+  m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &557865208
 MonoBehaviour:
@@ -1726,7 +1722,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Instruction
+  m_Text: Instructions
 --- !u!222 &557865209
 CanvasRenderer:
   m_ObjectHideFlags: 0
