@@ -89,6 +89,43 @@ public class PlayerController : MonoBehaviour
     }
 
     //-----------Shoot script
+    //void ShootBullet()
+    //{
+    //    // Check if enough time has passed since the last shot
+    //    if (Time.time - lastShotTime >= shootingInterval)
+    //    {
+    //        // Find the camera component on the player
+    //        Camera playerCamera = playerBodyObject.GetComponentInChildren<Camera>();
+    //        if (playerCamera != null)
+    //        {
+    //            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+    //            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+    //            if (bulletRb != null)
+    //            {
+    //                Vector3 bulletVelocity = playerCamera.transform.forward * bulletSpeed;
+    //                bulletRb.velocity = bulletVelocity;
+
+    //                // Set the rotation of the bullet to match its velocity
+    //                bullet.transform.rotation = Quaternion.LookRotation(bulletVelocity);
+
+    //                // Destroy the bullet after the specified lifetime
+    //                Destroy(bullet, bulletLifetime);
+
+
+    //            }
+    //            else
+    //            {
+    //                Debug.LogError("Bullet prefab is missing Rigidbody2D component!");
+    //            }
+    //        }
+
+    //        // Update the last shot time
+    //        lastShotTime = Time.time;
+    //    }
+    //}
+
     void ShootBullet()
     {
         // Check if enough time has passed since the last shot
@@ -98,13 +135,20 @@ public class PlayerController : MonoBehaviour
             Camera playerCamera = playerBodyObject.GetComponentInChildren<Camera>();
             if (playerCamera != null)
             {
-                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                // Get the center of the screen in viewport coordinates
+                Vector3 screenCenter = new Vector3(0.5f, 0.5f, playerCamera.nearClipPlane);
+
+                // Convert the screen center to a ray from the camera
+                Ray ray = playerCamera.ViewportPointToRay(screenCenter);
+
+                // Instantiate the bullet at the center of the screen
+                GameObject bullet = Instantiate(bulletPrefab, ray.origin, Quaternion.identity);
 
                 Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-                
+
                 if (bulletRb != null)
                 {
-                    Vector3 bulletVelocity = playerCamera.transform.forward * bulletSpeed;
+                    Vector3 bulletVelocity = ray.direction * bulletSpeed;
                     bulletRb.velocity = bulletVelocity;
 
                     // Set the rotation of the bullet to match its velocity
@@ -112,18 +156,21 @@ public class PlayerController : MonoBehaviour
 
                     // Destroy the bullet after the specified lifetime
                     Destroy(bullet, bulletLifetime);
-
-
                 }
                 else
                 {
-                    Debug.LogError("Bullet prefab is missing Rigidbody2D component!");
+                    Debug.LogError("Bullet prefab is missing Rigidbody component!");
                 }
             }
-           
+            else
+            {
+                Debug.LogError("Player camera not found!");
+            }
+
             // Update the last shot time
             lastShotTime = Time.time;
         }
     }
+
 
 }

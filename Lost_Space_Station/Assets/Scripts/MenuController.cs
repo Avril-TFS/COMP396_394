@@ -11,17 +11,22 @@ using System.Linq;
 public class MenuController : MonoBehaviour
 {
     AudioSource m_AudioSource;
-    //private bool isMusicOn = true;
-
     public Toggle toggleMusic;    //Music On/Off button 
     public Slider sliderVolume;    //Music volume slider
     [Tooltip("Please select Easy Toggle which is inside the RightButtomPanle2")]
     public ToggleGroup toggleGroup; //Difficulty (easy,medium, hard) toggle Group(attach in the Easy toggle game object)
+    [SerializeField] private Slider slider;
+    [Tooltip("For time it takes for the slider to fill to go to level1 ")]
+    public float loadingScenedurationSeconds = 2f;
+    [Tooltip("For music volume change to this targetVolumne at the end of 'loading' ")]
+    float targetVolume;
+    [Tooltip(" The amount of sound drop while 'loading' ")]
+    public float soundDropAmountWhileLoading = 0.8f;
 
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
        
         m_AudioSource = GetComponent<AudioSource>();
         
@@ -93,6 +98,51 @@ public class MenuController : MonoBehaviour
 
         
     }
+
+    
+
+    public void LOAD_MAINGAME()
+    {
+        //This method is used only for "PLAY" button only. This is to call the "loading" effect in the game.
+        slider.gameObject.SetActive(true);
+        StartCoroutine(LoadMainGame(1f, loadingScenedurationSeconds));
+    }
+
+    IEnumerator LoadMainGame(float targetValue, float time)
+    {
+        float elapsedTime = 0f;
+        float startValue = slider.value;
+        
+
+        float startVolume = m_AudioSource.volume;
+        if (m_AudioSource.volume>= soundDropAmountWhileLoading)
+        {
+             targetVolume = m_AudioSource.volume - soundDropAmountWhileLoading;
+        }
+        else
+        {
+             targetVolume = 0.0f;
+        }
+        
+
+        while (elapsedTime < time)
+        {
+            // Interpolate slider value
+            slider.value = Mathf.Lerp(startValue, targetValue, elapsedTime / time);
+            // Interpolate music pitch
+            m_AudioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        // Ensure the slider value reaches exactly the target value
+        slider.value = targetValue;
+        m_AudioSource.pitch = targetVolume;
+
+        SceneManager.LoadScene("LevelOne");
+    }
+
 
 
     public void LOAD_SCENE(string sceneName)

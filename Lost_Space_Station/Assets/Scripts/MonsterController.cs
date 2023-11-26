@@ -3,21 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterController : MonoBehaviour   //This is for small enemy movement
 {
     public StateMachine stateMachine;
     public StateMachine.State idle, chase, attack;
 
-    public GameObject enemy;
+    public GameObject enemy;    //Enemy means player here
     public float monsterFOV = 89; //degrees 
     private float cosMonsterFOVover2InRad;
     public float closeEnoughAttackCutoff = 2; //if distance of guard is less than or equal to 5 m close enou hto attack
     public float closeEnoughSenseCutoff = 15; //if (d(G,E) <=15m) - close enough to start chasing 
 
     public float strength = 5; //[0,100]
-    public float health = 100;
-    private float currentHealth;
+    public float health = 100;   //
+    private float currentHealth;  
     public float speed = 2; //2 m/s
 
     Scoring scoring;
@@ -29,6 +30,10 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     public int damage = 50;
     
     public float attackRate = 4f; //attacks every 4 seconds
+
+    //For HP bar - Slider is a child of small Enemy
+    private Slider hpBarSlider;
+
 
 
     // Start is called before the first frame update
@@ -54,6 +59,29 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         currentHealth = health;
 
         enemy = GameObject.Find("Player");
+
+
+        //For HP bar for enemy-----
+        Transform hpBarCanvas = transform.Find("HPBarCanvas");
+        if (hpBarCanvas != null)
+        {
+            // Find the HPBarSlider within the HPBarCanvas
+            hpBarSlider = hpBarCanvas.GetComponentInChildren<Slider>();
+            hpBarCanvas.LookAt(enemy.transform);
+
+
+
+
+
+            if (hpBarSlider == null)
+            {
+                Debug.LogError("HPBarSlider not found in HPBarCanvas.");
+            }
+        }
+        else
+        {
+            Debug.LogError("HPBarCanvas not found.");
+        }
     }
 
     // Update is called once per frame
@@ -87,6 +115,14 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         currentHealth -= damage;
         scoring.score += damage;
         scoring.sendMessageToUI("Hit enemy");
+
+
+        // Update HP bar value  
+        if (hpBarSlider != null)
+        {
+            hpBarSlider.value = currentHealth / health;
+        }
+
         // Check if the enemy's health has reached 0
         if (currentHealth <= 0)
         {

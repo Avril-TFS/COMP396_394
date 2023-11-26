@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -27,7 +28,8 @@ public class Door : MonoBehaviour
 
         if (col.gameObject.tag == "Player" && !playerController.CheckHasKey())
         {
-            Debug.Log("You need a key to open this door"); //Eventually show this message in UI
+            scoring.sendMessageToUI("You need a key to open this door");
+           
         }
     }
 

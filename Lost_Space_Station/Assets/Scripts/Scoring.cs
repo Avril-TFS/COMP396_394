@@ -71,9 +71,11 @@ public class Scoring : MonoBehaviour
     }
     public void GameOver()
     {
-        gameOver.SetActive(true);
-        Time.timeScale = 0;
-        isGameOver = true; 
+        //I erased gameOver panel becaus we already had one
+        //gameOver.SetActive(true);
+        //Time.timeScale = 0;
+        isGameOver = true;
+        SceneManager.LoadScene("GameOverScene");
 
     }
 

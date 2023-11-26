@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class ProwlerController : MonoBehaviour
 {
     public Transform[] waypoints;
@@ -14,6 +15,8 @@ public class ProwlerController : MonoBehaviour
     public float FOV = 80f;
     public float rotationSpeed = 1000f;
 
+    //For HP bar - Slider is a child of Robot
+    private Slider hpBarSlider;
     private enum ProwlerState
     {
         Patrol, Chase
@@ -24,6 +27,25 @@ public class ProwlerController : MonoBehaviour
     void Start()
     {
         state = ProwlerState.Patrol;
+
+        // For HP bar for Robot---- - TODO: implement the HP bar for boss fight. For now, this robot can't be beaten.
+        Transform hpBarCanvas = transform.Find("HPBarCanvas");
+        if (hpBarCanvas != null)
+            {
+                // Find the HPBarSlider within the HPBarCanvas
+                hpBarSlider = hpBarCanvas.GetComponentInChildren<Slider>();
+                hpBarCanvas.LookAt(player.transform);
+
+                if (hpBarSlider == null)
+                {
+                    Debug.LogError("HPBarSlider not found in HPBarCanvas.");
+                }
+            }
+            else
+            {
+                Debug.LogError("HPBarCanvas not found.");
+            }
+
     }
 
     // Update is called once per frame
