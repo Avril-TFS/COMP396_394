@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class StateMachine
 {
@@ -18,8 +19,8 @@ public class StateMachine
         }
     }
 
-    //
-    public Dictionary<string, State> states = new Dictionary<string, State>();
+    
+    Dictionary<string, State> states = new Dictionary<string, State>();
 
     public State currentState { get; private set; }
 
@@ -76,6 +77,7 @@ public class StateMachine
         }
 
         //change to newState 
+        //Debug.LogFormat("Changing from state {0} to state {1}", currentState, newState);
         currentState = newState;
 
         //do onEnter of newState
