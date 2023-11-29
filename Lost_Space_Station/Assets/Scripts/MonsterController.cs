@@ -200,17 +200,17 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     private void Attack()
     {
         isAttacking = true;
-       
+
         //Real attack movement to be implemented later
 
         //create timer so attack happens every x seconds 
-        if (timer > attackRate)
-        {
-            playerController.Damage(damage);
-            timer = 0;
-        }
+        //if (timer > attackRate)
+        //{
+        //    playerController.Damage(damage);
+        //    timer = 0;
+        //}
 
-      
+        playerController.Damage(damage);
 
     }
 

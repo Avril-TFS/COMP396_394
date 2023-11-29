@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public enum WeaponTypes{
     WeaponNormal, WeaponBetter, WeaponGood, WeaponBest, WeaponGOAT
@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public GameObject WeaponBest;
     public GameObject WeaponGOAT;
 
+    public ParticleSystem muzzleFlash;
+    private Slider hpBarSliderForPlayer;
+
     // This is for keys---------------
     public bool hasKey = false;
 
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour
     }//-------------------------------
 
     public int health = 100;
+   
 
     Scoring scoring;
     public int attackStrength = 20;
@@ -66,6 +70,7 @@ public class PlayerController : MonoBehaviour
         //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
         ActivateWeapon(WeaponTypes.WeaponNormal);
+        
 
         //Activate this line below for debugging if needed 
         //Cursor.lockState = CursorLockMode.None;
@@ -73,10 +78,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        HealthBarForPlayer();
         // Player movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        //Debug.Log("Current health: " + health);
 
         // Calculate the movement direction relative to the player's local space
         Vector3 movement = playerBody.TransformDirection(new Vector3(horizontalInput, 0, verticalInput)) * moveSpeed;
@@ -110,45 +117,34 @@ public class PlayerController : MonoBehaviour
     public void Damage(int amount)
     {
         health -= amount;
+        scoring.sendMessageToUI("Attacked by enemy");
+
+        // Update HP bar value  
+        if (hpBarSliderForPlayer != null)
+        {
+            // Ensure that the health value stays within the range [0, 100]
+            health = Mathf.Clamp(health, 0, 100);
+
+            // Calculate the normalized value for the slider based on the health
+            float normalizedHealth = (float)health / 100f;
+
+            // Update the slider value
+            hpBarSliderForPlayer.value = normalizedHealth;
+        }
     }
 
-    //-----------Shoot script
-    //void ShootBullet()
-    //{
-    //    // Check if enough time has passed since the last shot
-    //    if (Time.time - lastShotTime >= shootingInterval)
-    //    {
-    //        // Find the camera component on the player
-    //        Camera playerCamera = playerBodyObject.GetComponentInChildren<Camera>();
-    //        if (playerCamera != null)
-    //        {
-    //            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-
-    //            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-
-    //            if (bulletRb != null)
-    //            {
-    //                Vector3 bulletVelocity = playerCamera.transform.forward * bulletSpeed;
-    //                bulletRb.velocity = bulletVelocity;
-
-    //                // Set the rotation of the bullet to match its velocity
-    //                bullet.transform.rotation = Quaternion.LookRotation(bulletVelocity);
-
-    //                // Destroy the bullet after the specified lifetime
-    //                Destroy(bullet, bulletLifetime);
+    //HP bar for the Player
+    void HealthBarForPlayer()
+    {
+        GameObject Canvas = GameObject.Find("Canvas");
+        if (Canvas != null)
+        {
+            hpBarSliderForPlayer = Canvas.GetComponentInChildren<Slider>();
+            //Debug.Log("hpBarSliderForPlayer assigned: " + (hpBarSliderForPlayer != null));
+        }
+    }
 
 
-    //            }
-    //            else
-    //            {
-    //                Debug.LogError("Bullet prefab is missing Rigidbody2D component!");
-    //            }
-    //        }
-
-    //        // Update the last shot time
-    //        lastShotTime = Time.time;
-    //    }
-    //}
 
     void ShootBullet()
     { 
@@ -216,8 +212,8 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 bulletVelocity = ray.direction * bulletSpeed;
                     bulletRb.velocity = bulletVelocity;
+                    muzzleFlash.Play();
 
-                    
 
                     // Set the rotation of the bullet to match its velocity
                     bullet.transform.rotation = Quaternion.LookRotation(bulletVelocity);
