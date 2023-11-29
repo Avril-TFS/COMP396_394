@@ -62,6 +62,16 @@ public class Scoring : MonoBehaviour
     public void sendMessageToUI(string message)
     {
         messageText.text = "Message: " + message;
+        StartCoroutine(ClearMessageAfterDelay(3f));
+    }
+
+    private IEnumerator ClearMessageAfterDelay(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        // Clear the message after the delay
+        messageText.text = "Message: ";
     }
 
     public void AddScore(int amount)

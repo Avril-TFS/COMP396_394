@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f96fdb4c9b85bc488bf85809118f83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 7051293622683069384, guid: 77f2bffe5a7668545a76dd085bf53525, type: 3}
   monsterFOV: 89
   closeEnoughAttackCutoff: 2
   closeEnoughSenseCutoff: 10

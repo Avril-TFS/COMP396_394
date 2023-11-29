@@ -80,7 +80,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     {
         stateMachine.Update();
 
-        Debug.Log("current state is "+stateMachine.currentState);
+        //Debug.Log("current state is "+stateMachine.currentState);
 
         timer += Time.deltaTime;
 
@@ -169,10 +169,13 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         Vector3.ClampMagnitude(movement, enemyDistance);
         this.transform.position += movement;
 
+
+
     }
 
     void AttackOnFrame()
     {
+
         if(isAttacking == false)
         {
             // Look at the player when attacking
@@ -197,7 +200,9 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     private void Attack()
     {
         isAttacking = true;
-        //Debug.Log("Small enemy is close and enemy is attacking");
+       
+        //Real attack movement to be implemented later
+
         //create timer so attack happens every x seconds 
         if (timer > attackRate)
         {
@@ -273,7 +278,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         // Check if the collision is with a bullet
         if (collision.gameObject.CompareTag("Bullet"))
         {
-
+            //Debug.Log("Bullet hit");
             TakeDamage(damage);
 
             // Destroy the bullet on impact

@@ -7,6 +7,12 @@ TagManager:
   - ToggleMusic
   - SliderVolume
   - Bullet
+  - WeaponNormal
+  - WeaponBetter
+  - WeaponGood
+  - WeaponBest
+  - WeaponGOAT
+  - Key1
   layers:
   - Default
   - TransparentFX
