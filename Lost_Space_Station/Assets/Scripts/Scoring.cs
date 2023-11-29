@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Scoring : MonoBehaviour
 {
-    [Header("Score Properties")]
+    [Header("UI Properties")]
     public int score = 0;
     GameObject goScore;
     GameObject goTimer;
@@ -14,6 +14,7 @@ public class Scoring : MonoBehaviour
     Text scoreText;
     Text timerText;
     Text messageText;
+    public GameObject KeyPickupItemDisplay;
 
     [Header("Time Properties")]
     public float timer = 0;
@@ -100,5 +101,10 @@ public class Scoring : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenuScene");
+    }
+
+    public void KeypickUpUI()
+    {
+        KeyPickupItemDisplay.SetActive(true);
     }
 }

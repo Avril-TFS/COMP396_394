@@ -4,11 +4,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public enum WeaponTypes{
-    normal, better, good, best, GOAT
+    WeaponNormal, WeaponBetter, WeaponGood, WeaponBest, WeaponGOAT
 }
 public class PlayerController : MonoBehaviour
 {
@@ -25,9 +26,12 @@ public class PlayerController : MonoBehaviour
     public float bulletLifetime = 2f; // Time in seconds before the bullet is destroyed
     private float lastShotTime;
    
-    public WeaponTypes currentWeaponType = WeaponTypes.normal;
-   
-    
+    public WeaponTypes currentWeaponType = WeaponTypes.WeaponNormal;
+    public GameObject WeaponNormal;
+    public GameObject WeaponBetter;
+    public GameObject WeaponGood;
+    public GameObject WeaponBest;
+    public GameObject WeaponGOAT;
 
     // This is for keys---------------
     public bool hasKey = false;
@@ -44,7 +48,10 @@ public class PlayerController : MonoBehaviour
     public int health = 100;
 
     Scoring scoring;
-    public int attackStrength = 20; 
+    public int attackStrength = 20;
+
+   
+
 
     private void Start()
     {
@@ -52,8 +59,15 @@ public class PlayerController : MonoBehaviour
         playerBody = transform.Find("PlayerBody");
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
         playerBodyObject = GameObject.Find("PlayerBody");
+        //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
+        //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
+        //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
+        //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
+        //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
-        //Activate this when debugging 
+        ActivateWeapon(WeaponTypes.WeaponNormal);
+
+        //Activate this line below for debugging if needed 
         //Cursor.lockState = CursorLockMode.None;
     }
 
@@ -163,31 +177,32 @@ public class PlayerController : MonoBehaviour
                     // Adjust properties based on the current weapon type
                     switch (currentWeaponType)
                     {
-                        case WeaponTypes.normal:
+                        case WeaponTypes.WeaponNormal:
                             bulletSpeed = 50f;
                             shootingInterval = 0.8f;
+                            
                             // Other properties for Normal weapon...
                             break;
 
-                        case WeaponTypes.better:
+                        case WeaponTypes.WeaponBetter:
                             bulletSpeed = 100f;
                             shootingInterval = 0.6f;
                             // Other properties for Better weapon...
                             break;
 
-                        case WeaponTypes.good:
+                        case WeaponTypes.WeaponGood:
                             bulletSpeed =150f;
                             shootingInterval = 0.4f;
                             // Other properties for Good weapon...
                             break;
 
-                        case WeaponTypes.best:
+                        case WeaponTypes.WeaponBest:
                             bulletSpeed = 20f;
                             shootingInterval = 0.2f;
                             // Other properties for Best weapon...
                             break;
 
-                        case WeaponTypes.GOAT:
+                        case WeaponTypes.WeaponGOAT:
                             bulletSpeed = 250f;
                             shootingInterval = 0.1f;
                             // Other properties for GOAT weapon...
@@ -201,6 +216,8 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 bulletVelocity = ray.direction * bulletSpeed;
                     bulletRb.velocity = bulletVelocity;
+
+                    
 
                     // Set the rotation of the bullet to match its velocity
                     bullet.transform.rotation = Quaternion.LookRotation(bulletVelocity);
@@ -226,38 +243,42 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (!col.gameObject == GameObject.FindGameObjectWithTag("Key1"))
-        {
-            Destroy(col.gameObject);
-        }
         
         switch (col.gameObject.tag)
         {
             case "WeaponBetter":
                 scoring.sendMessageToUI("Better weapon picked up! ");
-                currentWeaponType = WeaponTypes.better;
+                currentWeaponType = WeaponTypes.WeaponBetter;
+                ActivateWeapon(WeaponTypes.WeaponBetter);
+                Destroy(col.gameObject);
                 break;
 
             case "WeaponGood":
                 scoring.sendMessageToUI("Good weapon picked up! ");
-                currentWeaponType = WeaponTypes.good;
+                currentWeaponType = WeaponTypes.WeaponGood;
+                ActivateWeapon(WeaponTypes.WeaponGood);
+                Destroy(col.gameObject);
                 break;
 
             case "WeaponBest":
                 scoring.sendMessageToUI("Best weapon picked up! ");
-                currentWeaponType = WeaponTypes.best;
+                currentWeaponType = WeaponTypes.WeaponBest;
+                ActivateWeapon(WeaponTypes.WeaponBest);
+                Destroy(col.gameObject);
                 break;
 
             case "WeaponGOAT":
                 scoring.sendMessageToUI("GOAT weapon picked up! ");
-                currentWeaponType = WeaponTypes.GOAT;
+                currentWeaponType = WeaponTypes.WeaponGOAT;
+                ActivateWeapon(WeaponTypes.WeaponGOAT);
+                Destroy(col.gameObject);
                 break;
 
             default:
                 break;
         }
-        Debug.Log("CurrentWeaponType : " + currentWeaponType);
-
+        //Debug.Log("CurrentWeaponType : " + currentWeaponType);
+        
         //if (col.gameObject.tag == "WeaponBetter")
         //{
 
@@ -267,6 +288,59 @@ public class PlayerController : MonoBehaviour
         //    currentWeaponType = WeaponTypes.better;
         //    Debug.Log("CurrentWeaponType : " + currentWeaponType);
         //}
+    }
+
+    void ActivateWeapon(WeaponTypes weaponType)
+    {
+        currentWeaponType = weaponType;
+
+        GameObject[] weaponObjects ={
+            WeaponNormal,
+            WeaponGood,
+            WeaponBetter,
+            WeaponBest,
+            WeaponGOAT
+        };
+
+
+
+        foreach (GameObject weaponObject in weaponObjects)
+        {
+            if (weaponObject.tag != currentWeaponType.ToString())
+            {
+                weaponObject.SetActive(false);
+            }
+            else
+            {
+                weaponObject.SetActive(true);
+            }
+           
+            //Debug.Log(weaponObject.ToString()) ;
+        }
+       
+        // Activate the selected weapon object
+        GameObject selectedWeaponObject = GameObject.FindGameObjectWithTag(weaponType.ToString());
+        //Debug.Log("selectedWeaponObject is: "+selectedWeaponObject.ToString());  //rifle
+
+        switch (selectedWeaponObject.ToString())
+        {
+            case "rifle":
+                WeaponBetter.SetActive(true);
+                break;
+            //case "game object's name for weapontGood":
+            //    WeaponGood.SetActive(true);
+            //    break;
+            //case "game object's name for weapontBest":
+            //    WeaponBest.SetActive(true);
+            //    break;
+            //case "game object's name for weapontGOAT":
+            //    WeaponGOAT.SetActive(true);
+            //    break;
+
+            default:
+                break;
+        }
+   
     }
 }
 
