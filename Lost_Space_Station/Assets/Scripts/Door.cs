@@ -36,7 +36,8 @@ public class Door : MonoBehaviour
     void OpenDoor()
     {
         transform.Translate(Vector3.down * openDoorDistance);
-
+        GameObject crossHairImage = GameObject.Find("crossHairImage");
+        crossHairImage.SetActive(false);
         //Bonus added according to clear time
         if (scoring.timer < goodTimeRecord)
         {
