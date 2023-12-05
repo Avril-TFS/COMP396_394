@@ -10,8 +10,6 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 {
     public StateMachine stateMachine;
     public StateMachine.State idle, chase, attack;
-
-
     public GameObject enemy;    //Enemy means player here
     public float monsterFOV = 89; //degrees 
     private float cosMonsterFOVover2InRad;
@@ -33,6 +31,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
     // Rotation speed for Enemy
     public float rotationSpeed = 60.0f;
+    public GameObject QuestionMark;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +69,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         //attack.onExit = delegate { Debug.Log("attack.onExit"); };
         attack.onFrame = AttackOnFrame;
 
+        QuestionMark.SetActive(false);
         //FSM Logie end************************
 
 
@@ -128,6 +128,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
     private void Idle()
     {
+        QuestionMark.SetActive(true);
         if (stateMachine.currentState == idle)
         {
             RotateEnemy360();
@@ -138,6 +139,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     {
         //Debug.Log("Chase.onFrame");
         Chase();
+        QuestionMark.SetActive(false);
 
         // Look at the player
         transform.LookAt(enemy.transform);
