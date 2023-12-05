@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class Key : MonoBehaviour
@@ -9,10 +10,13 @@ public class Key : MonoBehaviour
 
     public bool isPickedUp = false;
     Scoring scoring;
+    AudioManager am;
+
 
     private void Start()
     {
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
+        am = GameObject.Find("AudioController").GetComponent<AudioManager>();
     }
     void Update()
     {
@@ -24,7 +28,7 @@ public class Key : MonoBehaviour
         if(col.gameObject.tag == "Player" && !isPickedUp)
         {
             isPickedUp = true;
-
+            am.PLAY_SOUND_ONCE(0);
             Destroy(gameObject);
             //Should play picking up sound later
             scoring.sendMessageToUI("Key picked up! ");
@@ -32,4 +36,6 @@ public class Key : MonoBehaviour
             col.GetComponent<PlayerController>().HasKey();
         }
     }
+
+ 
 }

@@ -10,7 +10,10 @@ using System.Linq;
 
 public class MenuController : MonoBehaviour
 {
+    [Header("Sounds")]
     AudioSource m_AudioSource;
+    [Tooltip("Element0->SelectSound, Element1->LoadingSoundLevel")]
+    public AudioClip[] sfxClips;
     public Toggle toggleMusic;    //Music On/Off button 
     public Slider sliderVolume;    //Music volume slider
     [Tooltip("Please select Easy Toggle which is inside the RightButtomPanle2")]
@@ -105,6 +108,10 @@ public class MenuController : MonoBehaviour
     {
         //This method is used only for "PLAY" button only. This is to call the "loading" effect in the game.
         slider.gameObject.SetActive(true);
+        if (m_AudioSource != null && sfxClips != null)
+        {
+            m_AudioSource.PlayOneShot(sfxClips[1]);
+        }
         StartCoroutine(LoadMainGame(1f, loadingScenedurationSeconds));
     }
 
@@ -201,6 +208,12 @@ public class MenuController : MonoBehaviour
         print("Difficulty" + DifficultyLevelSlect().ToString());
     }
 
-
+    public void PLAY_SOUND_ONCE(int element)
+    {
+        if (m_AudioSource != null && sfxClips != null)
+        {
+            m_AudioSource.PlayOneShot(sfxClips[element]);
+        }
+    }
 
 }

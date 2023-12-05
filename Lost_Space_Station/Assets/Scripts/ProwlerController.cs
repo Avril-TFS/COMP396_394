@@ -14,7 +14,7 @@ public class ProwlerController : MonoBehaviour
     public float speed = 3f;
     public float FOV = 80f;
     public float rotationSpeed = 1000f;
-
+    Scoring scoring;
     //For HP bar - Slider is a child of Robot
     private Slider hpBarSlider;
     private enum ProwlerState
@@ -27,7 +27,7 @@ public class ProwlerController : MonoBehaviour
     void Start()
     {
         state = ProwlerState.Patrol;
-
+        scoring = GameObject.Find("UI").GetComponent<Scoring>();
         // For HP bar for Robot---- - TODO: implement the HP bar for boss fight. For now, this robot can't be beaten.
         Transform hpBarCanvas = transform.Find("HPBarCanvas");
         if (hpBarCanvas != null)
@@ -111,5 +111,12 @@ public class ProwlerController : MonoBehaviour
         {
             SceneManager.LoadScene("GameOverScene");
         }
+
+        if (col.gameObject.tag == "Bullet")
+        {
+            scoring.sendMessageToUI("This robot is unbeatable at this level.");
+        }
     }
+
+
 }

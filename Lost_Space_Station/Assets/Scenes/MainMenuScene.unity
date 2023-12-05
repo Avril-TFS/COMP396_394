@@ -881,6 +881,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &301271695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2363,6 +2375,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &877184076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,11 +2555,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee470affb637dc4448c8ca5bd25076c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxClips:
+  - {fileID: 8300000, guid: 4fb14c79a0f03bd4abece7b75fb1462b, type: 3}
+  - {fileID: 8300000, guid: 02a8ee3ae737f1a4b9efed5a08d23f19, type: 3}
   toggleMusic: {fileID: 1534429465}
   sliderVolume: {fileID: 2030373211}
   toggleGroup: {fileID: 8615701}
   slider: {fileID: 1549861355}
-  loadingScenedurationSeconds: 2
+  loadingScenedurationSeconds: 4
   soundDropAmountWhileLoading: 0.8
 --- !u!4 &897723622
 Transform:
@@ -3067,6 +3094,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1024176769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3204,6 +3243,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4089,6 +4140,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: ExitButtonClicked
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5484,6 +5547,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: SAVE_PREFERENCES
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 897723620}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: PLAY_SOUND_ONCE
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

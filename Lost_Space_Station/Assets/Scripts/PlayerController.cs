@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     // This is for keys---------------
     public bool hasKey = false;
 
+    AudioManager am;
+
     public void HasKey()
     {
         hasKey = true;
@@ -63,13 +65,15 @@ public class PlayerController : MonoBehaviour
         playerBody = transform.Find("PlayerBody");
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
         playerBodyObject = GameObject.Find("PlayerBody");
-        //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
-        //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
-        //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
-        //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
-        //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
+        am = GameObject.Find("AudioController").GetComponent<AudioManager>();
+    
+    //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
+    //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
+    //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
+    //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
+    //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
-        ActivateWeapon(WeaponTypes.WeaponNormal);
+    ActivateWeapon(WeaponTypes.WeaponNormal);
         
 
         //Activate this line below for debugging if needed 
@@ -176,31 +180,37 @@ public class PlayerController : MonoBehaviour
                         case WeaponTypes.WeaponNormal:
                             bulletSpeed = 50f;
                             shootingInterval = 0.8f;
-                            
+                            am.PLAY_SOUND_ONCE(1);
                             // Other properties for Normal weapon...
                             break;
 
                         case WeaponTypes.WeaponBetter:
                             bulletSpeed = 100f;
                             shootingInterval = 0.6f;
+                            am.PLAY_SOUND_ONCE(2);
                             // Other properties for Better weapon...
                             break;
 
                         case WeaponTypes.WeaponGood:
                             bulletSpeed =150f;
                             shootingInterval = 0.4f;
+                            am.PLAY_SOUND_ONCE(3);
                             // Other properties for Good weapon...
                             break;
 
                         case WeaponTypes.WeaponBest:
                             bulletSpeed = 20f;
                             shootingInterval = 0.2f;
+                            //Download better sound for this if we implement this type of weapon
+                            am.PLAY_SOUND_ONCE(1);
                             // Other properties for Best weapon...
                             break;
 
                         case WeaponTypes.WeaponGOAT:
                             bulletSpeed = 250f;
                             shootingInterval = 0.1f;
+                            //Download better sound for this if we implement this type of weapon
+                            am.PLAY_SOUND_ONCE(1);
                             // Other properties for GOAT weapon...
                             break;
 
