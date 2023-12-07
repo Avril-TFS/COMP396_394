@@ -78,8 +78,10 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     // Update is called once per frame
     void Update()
     {
-        stateMachine.Update();
-
+        if (stateMachine != null)
+        {
+            stateMachine.Update();
+        }
         //Debug.Log("current state is "+stateMachine.currentState);
 
         timer += Time.deltaTime;
