@@ -701,6 +701,10 @@ MonoBehaviour:
   speed: 3
   FOV: 80
   rotationSpeed: 1000
+  damage: 100
+  health: 100
+  key: {fileID: 155280, guid: 41d1cac196452694fb10f2476db79e6e, type: 3}
+  explosion: {fileID: 2530325798995656046, guid: 38769bf60f14ac641b878a51ac74caba, type: 3}
 --- !u!136 &7913546208394927695
 CapsuleCollider:
   m_ObjectHideFlags: 0

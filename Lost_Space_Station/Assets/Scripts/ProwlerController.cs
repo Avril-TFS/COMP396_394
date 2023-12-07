@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
+
 public class ProwlerController : MonoBehaviour
 {
     public Transform[] waypoints;
@@ -17,9 +20,21 @@ public class ProwlerController : MonoBehaviour
     Scoring scoring;
     //For HP bar - Slider is a child of Robot
     private Slider hpBarSlider;
+
+    //for level3 attacking/damage
+    Scene currentScene;
+    PlayerController playerController;
+    public int damage = 10;
+    private float currentHealth;
+    public float health = 100;
+    bool enraged = false;
+    public GameObject key;
+    public GameObject explosion;
+
+
     private enum ProwlerState
     {
-        Patrol, Chase
+        Patrol, Chase, Attack 
     }
     private ProwlerState state;
 
@@ -46,6 +61,9 @@ public class ProwlerController : MonoBehaviour
                 Debug.LogError("HPBarCanvas not found.");
             }
 
+        currentScene = SceneManager.GetActiveScene();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        currentHealth = health; 
     }
 
     // Update is called once per frame
@@ -61,6 +79,7 @@ public class ProwlerController : MonoBehaviour
                 Chase();
                 break;
         }
+
     }
 
     void Patrol()
@@ -107,16 +126,89 @@ public class ProwlerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Player")
+
+        if(currentScene.name == "LevelThree")
         {
-            SceneManager.LoadScene("GameOverScene");
+            if (col.gameObject.tag == "Player")
+            {
+                Attack(); 
+            }
+
+            if (col.gameObject.tag == "Bullet")
+            {
+                TakeDamage(playerController.attackStrength);
+
+                // Destroy the bullet on impact
+                Destroy(col.gameObject);
+            }
+        }
+        else
+        {
+            if (col.gameObject.tag == "Player")
+            {
+                SceneManager.LoadScene("GameOverScene");
+            }
+
+            if (col.gameObject.tag == "Bullet")
+            {
+                scoring.sendMessageToUI("This robot is unbeatable at this level.");
+            }
         }
 
-        if (col.gameObject.tag == "Bullet")
+    }
+
+    private void Attack()
+    {
+        Debug.Log("Attacking, damage: " + damage); 
+
+        if (enraged)
         {
-            scoring.sendMessageToUI("This robot is unbeatable at this level.");
+            //attack damage increse, speed increase, throw objects?
+            scoring.sendMessageToUI("The robot is enranged. Damage and speed increased!");
+            playerController.Damage(damage * 2);
+            speed = 6f;
+        }
+        else
+        {
+            playerController.Damage(damage);
+            Debug.Log("PlayerControll Damage called: " + damage);
+
         }
     }
 
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        scoring.score += damage;
+        scoring.sendMessageToUI("Hit enemy");
 
+        // Update HP bar value  
+        if (hpBarSlider != null)
+        {
+            hpBarSlider.value = currentHealth / health;
+        }
+
+        if (currentHealth <= health *.5)
+        {
+            enraged = true; 
+            
+        }
+        // Check if the enemy's health has reached 0
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+    }
+    
+    public void Die()
+    {
+        Debug.Log("Die called.");
+        //scoring.AddScore(killPoints);
+        GameObject newKey = Instantiate(key, transform.position, Quaternion.identity);
+        newKey.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        Instantiate(explosion, transform.position, Quaternion.identity);
+
+        //Destroy(this.gameObject);
+    }
 }

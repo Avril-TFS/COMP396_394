@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
         Application.Quit();
 #endif
         }
+
     }
 
     private void Die()
