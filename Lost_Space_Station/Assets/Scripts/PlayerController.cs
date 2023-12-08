@@ -122,8 +122,12 @@ public class PlayerController : MonoBehaviour
     public void Damage(int amount)
     {
         health -= amount;
-        scoring.sendMessageToUI("Attacked by enemy");
 
+        if ( amount > 0)
+        {
+            scoring.sendMessageToUI("Attacked by enemy");
+
+        }
         // Update HP bar value  
         if (hpBarSliderForPlayer != null)
         {
@@ -137,6 +141,7 @@ public class PlayerController : MonoBehaviour
             hpBarSliderForPlayer.value = normalizedHealth;
         }
     }
+
 
     //HP bar for the Player
     void HealthBarForPlayer()

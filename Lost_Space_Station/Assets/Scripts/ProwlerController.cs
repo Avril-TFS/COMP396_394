@@ -200,15 +200,15 @@ public class ProwlerController : MonoBehaviour
         }
 
     }
-    
+  
     public void Die()
     {
         Debug.Log("Die called.");
         //scoring.AddScore(killPoints);
         GameObject newKey = Instantiate(key, transform.position, Quaternion.identity);
         newKey.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        Instantiate(explosion, transform.position, Quaternion.identity);
-
-        //Destroy(this.gameObject);
+        GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+        newExplosion.transform.localScale = new Vector3(1,1,1);
+        Destroy(this.gameObject);
     }
 }

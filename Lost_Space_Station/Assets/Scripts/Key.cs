@@ -33,6 +33,7 @@ public class Key : MonoBehaviour
             //Should play picking up sound later
             scoring.sendMessageToUI("Key picked up! ");
             scoring.KeypickUpUI();
+
             col.GetComponent<PlayerController>().HasKey();
         }
     }
