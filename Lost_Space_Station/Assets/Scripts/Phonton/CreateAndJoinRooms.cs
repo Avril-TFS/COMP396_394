@@ -13,11 +13,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     private void Start()
     {
         //Initializing Region to empty
-        //PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "";
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "";
         //Debug.Log("isConnected? " + PhotonNetwork.IsConnected);
-        //Debug.Log("isConnectedAndReady?"+PhotonNetwork.IsConnectedAndReady);
-        //Debug.Log("isMasterClient?" + PhotonNetwork.IsMasterClient);
-        //Debug.Log($"Current Server: {PhotonNetwork.ServerAddress}");
+        //Debug.Log("isConnectedAndReady?" + PhotonNetwork.IsConnectedAndReady);
+        Debug.Log("---------Lobby----------------------------------");
+        Debug.Log("isMasterClient?" + PhotonNetwork.IsMasterClient);
+        Debug.Log($"Current Server: {PhotonNetwork.ServerAddress}");
         //Debug.Log($"Current Region: {PhotonNetwork.CloudRegion}");
 
     }

@@ -1,6 +1,4 @@
 //Author : Yuko Yamano
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +36,7 @@ public class PhotonPlayerController : MonoBehaviour
 
 
     PhotonView view;
+
     // This is for keys---------------
     public bool hasKey = false;
 
@@ -59,6 +58,7 @@ public class PhotonPlayerController : MonoBehaviour
 
     private void Start()
     {
+        view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         playerBody = transform.Find("PlayerBody");
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
@@ -77,12 +77,23 @@ public class PhotonPlayerController : MonoBehaviour
         //No constrain on the coursor movement
         Cursor.lockState = CursorLockMode.None;
 
-        view = GetComponent<PhotonView>();
+        Debug.Log("---------PhotonLevelOne----------------------------------");
+        //Debug.Log("isConnected? " + PhotonNetwork.IsConnected);
+        //Debug.Log("isConnectedAndReady?" + PhotonNetwork.IsConnectedAndReady);
+        Debug.Log("isMasterClient?" + PhotonNetwork.IsMasterClient);
+        scoring.sendMessageToUI("isMasterClient? " + PhotonNetwork.IsMasterClient);
+        Debug.Log($"Current Server: {PhotonNetwork.ServerAddress}");
+        //Debug.Log($"Current Region: {PhotonNetwork.CloudRegion}");
+
+
+
 
     }
 
     private void Update()
     {
+        scoring.sendMessageToUI("view.isMine? " + view.IsMine);
+      
         if (view.IsMine)
         {
             HealthBarForPlayer();
