@@ -34,7 +34,7 @@ public class ProwlerController : MonoBehaviour
 
     private enum ProwlerState
     {
-        Patrol, Chase, Attack 
+        Patrol, Chase, Attack
     }
     private ProwlerState state;
 
@@ -46,24 +46,24 @@ public class ProwlerController : MonoBehaviour
         // For HP bar for Robot---- - TODO: implement the HP bar for boss fight. For now, this robot can't be beaten.
         Transform hpBarCanvas = transform.Find("HPBarCanvas");
         if (hpBarCanvas != null)
-            {
-                // Find the HPBarSlider within the HPBarCanvas
-                hpBarSlider = hpBarCanvas.GetComponentInChildren<Slider>();
-                hpBarCanvas.LookAt(player.transform);
+        {
+            // Find the HPBarSlider within the HPBarCanvas
+            hpBarSlider = hpBarCanvas.GetComponentInChildren<Slider>();
+            hpBarCanvas.LookAt(player.transform);
 
-                if (hpBarSlider == null)
-                {
-                    Debug.LogError("HPBarSlider not found in HPBarCanvas.");
-                }
-            }
-            else
+            if (hpBarSlider == null)
             {
-                Debug.LogError("HPBarCanvas not found.");
+                Debug.LogError("HPBarSlider not found in HPBarCanvas.");
             }
+        }
+        else
+        {
+            Debug.LogError("HPBarCanvas not found.");
+        }
 
         currentScene = SceneManager.GetActiveScene();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        currentHealth = health; 
+        currentHealth = health;
     }
 
     // Update is called once per frame
@@ -84,21 +84,50 @@ public class ProwlerController : MonoBehaviour
 
     void Patrol()
     {
-        if(Vector3.Distance(transform.position, player.position) < chaseDistance && CanSee())
+        if (Vector3.Distance(transform.position, player.position) < chaseDistance && CanSee())
         {
             state = ProwlerState.Chase;
             return;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
-        transform.LookAt(waypoints[currentWaypoint].position);
-
-        if(Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 0.2f)
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(waypoints[currentWaypoint].position, out hit, 2.0f, UnityEngine.AI.NavMesh.AllAreas))
         {
-            currentWaypoint = (currentWaypoint  + 1) % waypoints.Length;
+            Vector3 targetPosition = hit.position;
+            UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+
+
+            if (UnityEngine.AI.NavMesh.CalculatePath(transform.position, targetPosition, UnityEngine.AI.NavMesh.AllAreas, path))
+            {
+
+                if (path.corners.Length > 1)
+                {
+
+                    Vector3 nextCorner = path.corners[1];
+                    transform.position = Vector3.MoveTowards(transform.position, nextCorner, speed * Time.deltaTime);
+
+                    Vector3 direction = (nextCorner - transform.position).normalized;
+                    Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 0.2f)
+                    {
+                        currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+                    }
+                }
+            }
+
+            /*
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
+            transform.LookAt(waypoints[currentWaypoint].position);
+
+            if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 0.2f)
+            {
+                currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+            }
+            */
         }
     }
-
     void Chase()
     {
         if (Vector3.Distance(transform.position, player.position) > chaseDistance && !CanSee())
@@ -106,17 +135,39 @@ public class ProwlerController : MonoBehaviour
             state = ProwlerState.Patrol;
         }
 
-        Vector3 targetPosition = player.position;
-        targetPosition.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        UnityEngine.AI.NavMeshHit hit;
+            if (UnityEngine.AI.NavMesh.SamplePosition(player.position, out hit, 2.0f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                Vector3 targetPosition = hit.position;
+                UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
 
-        Vector3 direction = (player.position - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                if (UnityEngine.AI.NavMesh.CalculatePath(transform.position, targetPosition, UnityEngine.AI.NavMesh.AllAreas, path))
+                {
+                    if (path.corners.Length > 1)
+                    {
+                        Vector3 nextCorner = path.corners[1];
+                        transform.position = Vector3.MoveTowards(transform.position, nextCorner, speed * Time.deltaTime);
+
+                        Vector3 direction = (nextCorner - transform.position).normalized;
+                        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                    }
+                }
+
+                /*
+            Vector3 targetPosition = player.position;
+            targetPosition.y = transform.position.y;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+            Vector3 direction = (player.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                */
+            }
     }
 
-
-    bool CanSee()
+    private bool CanSee()
     {
         Vector3 directionToPlayer = player.position - transform.position;
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
@@ -124,14 +175,14 @@ public class ProwlerController : MonoBehaviour
         return angle < FOV * 0.5f;
     }
 
-    private void OnTriggerEnter(Collider col)
+    void OnTriggerEnter(Collider col)
     {
 
-        if(currentScene.name == "LevelThree")
+        if (currentScene.name == "LevelThree")
         {
             if (col.gameObject.tag == "Player")
             {
-                Attack(); 
+                Attack();
             }
 
             if (col.gameObject.tag == "Bullet")
@@ -157,9 +208,9 @@ public class ProwlerController : MonoBehaviour
 
     }
 
-    private void Attack()
+    void Attack()
     {
-        Debug.Log("Attacking, damage: " + damage); 
+        Debug.Log("Attacking, damage: " + damage);
 
         if (enraged)
         {
@@ -176,7 +227,7 @@ public class ProwlerController : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage)
+    void TakeDamage(int damage)
     {
         currentHealth -= damage;
         scoring.score += damage;
@@ -188,10 +239,10 @@ public class ProwlerController : MonoBehaviour
             hpBarSlider.value = currentHealth / health;
         }
 
-        if (currentHealth <= health *.5)
+        if (currentHealth <= health * .5)
         {
-            enraged = true; 
-            
+            enraged = true;
+
         }
         // Check if the enemy's health has reached 0
         if (currentHealth <= 0)
@@ -200,15 +251,15 @@ public class ProwlerController : MonoBehaviour
         }
 
     }
-  
-    public void Die()
+
+    void Die()
     {
         Debug.Log("Die called.");
         //scoring.AddScore(killPoints);
         GameObject newKey = Instantiate(key, transform.position, Quaternion.identity);
         newKey.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
-        newExplosion.transform.localScale = new Vector3(1,1,1);
+        newExplosion.transform.localScale = new Vector3(1, 1, 1);
         Destroy(this.gameObject);
     }
 }

@@ -66,14 +66,14 @@ public class PlayerController : MonoBehaviour
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
         playerBodyObject = GameObject.Find("PlayerBody");
         am = GameObject.Find("AudioController").GetComponent<AudioManager>();
-    
-    //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
-    //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
-    //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
-    //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
-    //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
+        
+        //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
+        //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
+        //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
+        //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
+        //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
-    ActivateWeapon(WeaponTypes.WeaponNormal);
+        ActivateWeapon(WeaponTypes.WeaponNormal);
         
 
         //Activate this line below for debugging if needed 
