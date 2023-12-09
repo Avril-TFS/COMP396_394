@@ -76,8 +76,11 @@ public class PlayerController : MonoBehaviour
     ActivateWeapon(WeaponTypes.WeaponNormal);
         
 
-        //Activate this line below for debugging if needed 
-        //Cursor.lockState = CursorLockMode.None;
+        //No constrain on the coursor movement
+        Cursor.lockState = CursorLockMode.None;
+        
+        //
+        
     }
 
     private void Update()
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
             Die();
         }
 
-        //Shooting
+        //Shooting debugging purpose only
         if (Input.GetMouseButtonDown(0))
         {
             ShootBullet();
@@ -109,6 +112,7 @@ public class PlayerController : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
+        
 #endif
         }
     }

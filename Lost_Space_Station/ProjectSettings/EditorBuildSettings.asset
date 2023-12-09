@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: 4562c41b01ef259448045c5e1c1eba5a
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: ec950ec04f3721c409f42548f8ac0ea4
+  - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: b9aa61d2584463b45b39c171491e52dc
   - enabled: 1
@@ -17,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelTwo.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/PhontonLevelOne.unity
+    guid: 0f5e8951451748749af73608ebe13734
   m_configObjects: {}

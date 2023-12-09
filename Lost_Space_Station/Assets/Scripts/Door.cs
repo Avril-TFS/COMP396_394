@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
@@ -12,32 +13,67 @@ public class Door : MonoBehaviour
     public int bonusRewardPoint = 500;  //Bonus reward point
     Scoring scoring;
 
+    PhotonPlayerController photonPlayerControllerScript;
+
     // Start is called before the first frame update
     void Start()
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
+        //if (currentSceneName == "PhontonLevelOne")
+        //{
+        //    photonPlayerControllerScript = GameObject.Find("Player").GetComponent<PhotonPlayerController>();
+        //}
     }
     void OnCollisionEnter(Collision col)
     {
-        
-        if(col.gameObject.tag == "Player" && playerController.CheckHasKey())
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName == "PhontonLevelOne")
         {
-            OpenDoor();
-            Debug.Log("Clear");
+            if (col.gameObject.tag == "Player" && col.gameObject.GetComponent<PhotonPlayerController>().CheckHasKey())
+            {
+                OpenDoor();
+                Debug.Log("Clear");
+            }
+
+            if (col.gameObject.tag == "Player" && !col.gameObject.GetComponent<PhotonPlayerController>().CheckHasKey())
+            {
+                scoring.sendMessageToUI("You need a key to open this door");
+
+            }
         }
 
-        if (col.gameObject.tag == "Player" && !playerController.CheckHasKey())
+
+        if (currentSceneName != "PhontonLevelOne")
         {
-            scoring.sendMessageToUI("You need a key to open this door");
-           
+            if (col.gameObject.tag == "Player" && playerController.CheckHasKey())
+            {
+                OpenDoor();
+                Debug.Log("Clear");
+            }
+
+            if (col.gameObject.tag == "Player" && !playerController.CheckHasKey())
+            {
+                scoring.sendMessageToUI("You need a key to open this door");
+
+            }
         }
+           
     }
 
     void OpenDoor()
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
         transform.Translate(Vector3.down * openDoorDistance);
         GameObject crossHairImage = GameObject.Find("crossHairImage");
-        crossHairImage.SetActive(false);
+
+        if (currentSceneName != "PhontonLevelOne")
+        {
+            crossHairImage.SetActive(false);
+        }
+
+
+          
         //Bonus added according to clear time
         if (scoring.timer < goodTimeRecord)
         {
