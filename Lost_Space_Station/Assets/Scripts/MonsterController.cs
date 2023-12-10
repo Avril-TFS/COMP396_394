@@ -33,6 +33,9 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     public float rotationSpeed = 60.0f;
     public GameObject QuestionMark;
 
+    UnityEngine.AI.NavMeshHit hit;
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,7 +75,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         QuestionMark.SetActive(false);
         //FSM Logie end************************
 
-
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -162,7 +165,29 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     }
     private void Chase()
     {
+        Transform enemyTransform = enemy.transform;
 
+        if (UnityEngine.AI.NavMesh.SamplePosition(enemyTransform.position, out hit, 2.0f, UnityEngine.AI.NavMesh.AllAreas))
+        {
+            Vector3 targetPosition = hit.position;
+            UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+
+            if (UnityEngine.AI.NavMesh.CalculatePath(transform.position, targetPosition, UnityEngine.AI.NavMesh.AllAreas, path))
+            {
+                if (path.corners.Length > 1)
+                {
+                    Vector3 nextCorner = path.corners[1];
+                    transform.position = Vector3.MoveTowards(transform.position, nextCorner, speed * Time.deltaTime);
+
+                    Vector3 direction = (nextCorner - transform.position).normalized;
+                    Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+            }
+        }
+
+
+        /*
         Vector3 enemyHeading = (enemy.transform.position - this.transform.position);
         float enemyDistance = enemyHeading.magnitude;
         enemyHeading.Normalize();
@@ -170,7 +195,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         Vector3 movement = enemyHeading * speed * Time.deltaTime; //m/s but we want m/frame so multiply by s/frame
         Vector3.ClampMagnitude(movement, enemyDistance);
         this.transform.position += movement;
-
+        */
 
 
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public PlayerController playerController;
-    public float openDoorDistance = 5;
+   // public float openDoorDistance = 5;
     public int goodTimeRecord = 30; //the amount of time spent when the player reaches the goal within this second 
     public int bonusRewardPoint = 500;  //Bonus reward point
     Scoring scoring;
@@ -35,7 +35,11 @@ public class Door : MonoBehaviour
 
     void OpenDoor()
     {
-        transform.Translate(Vector3.down * openDoorDistance);
+        Destroy(GetComponent<Collider>());
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(gameObject);
+
+        //transform.Translate(Vector3.down * openDoorDistance);
         GameObject crossHairImage = GameObject.Find("crossHairImage");
         crossHairImage.SetActive(false);
         //Bonus added according to clear time

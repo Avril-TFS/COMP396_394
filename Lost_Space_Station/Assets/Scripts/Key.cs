@@ -28,13 +28,15 @@ public class Key : MonoBehaviour
         if(col.gameObject.tag == "Player" && !isPickedUp)
         {
             isPickedUp = true;
-            am.PLAY_SOUND_ONCE(0);
+           
             Destroy(gameObject);
             //Should play picking up sound later
             scoring.sendMessageToUI("Key picked up! ");
             scoring.KeypickUpUI();
 
             col.GetComponent<PlayerController>().HasKey();
+
+            am.PLAY_SOUND_ONCE(0);
         }
     }
 

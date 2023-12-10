@@ -9,7 +9,13 @@ public class Exit : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("GameOverScene");    // Change this to level 2 / next level when the are implemented
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            int nextScene = currentScene + 1;
+
+            if(nextScene < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(nextScene);
+            }
         }
     }
 }
