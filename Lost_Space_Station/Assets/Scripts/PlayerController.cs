@@ -25,7 +25,10 @@ public class PlayerController : MonoBehaviour
     public float bulletSpeed = 10f; // Set your default bullet speed here
     public float bulletLifetime = 2f; // Time in seconds before the bullet is destroyed
     private float lastShotTime;
-   
+    public float bulletSize = 1.0f;
+
+    public float fallSpeed = 4.0f;
+
     public WeaponTypes currentWeaponType = WeaponTypes.WeaponNormal;
     public GameObject WeaponNormal;
     public GameObject WeaponBetter;
@@ -51,12 +54,12 @@ public class PlayerController : MonoBehaviour
     }//-------------------------------
 
     public int health = 100;
-   
+
 
     Scoring scoring;
     public int attackStrength = 20;
 
-   
+
 
 
     private void Start()
@@ -66,15 +69,16 @@ public class PlayerController : MonoBehaviour
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
         playerBodyObject = GameObject.Find("PlayerBody");
         am = GameObject.Find("AudioController").GetComponent<AudioManager>();
-        
+
         //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
         //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
         //WeaponGood = GameObject.FindGameObjectWithTag("WeaponGood");
         //WeaponBest = GameObject.FindGameObjectWithTag("WeaponBest");
         //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
-        ActivateWeapon(WeaponTypes.WeaponNormal);
-        
+        //ActivateWeapon(WeaponTypes.WeaponNormal);
+        currentWeaponType = GameManager.instance.playerCurrentWeapon;
+        ActivateWeapon(currentWeaponType);
 
         //Activate this line below for debugging if needed 
         //Cursor.lockState = CursorLockMode.None;
@@ -108,10 +112,20 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+            Application.Quit();
 #endif
         }
 
+        if (!IsGrounded())
+        {
+            rb.velocity += Vector3.down * fallSpeed;
+        }
+
+    }
+
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, 1.5f);
     }
 
     private void Die()
@@ -123,7 +137,7 @@ public class PlayerController : MonoBehaviour
     {
         health -= amount;
 
-        if ( amount > 0)
+        if (amount > 0)
         {
             scoring.sendMessageToUI("Attacked by enemy");
 
@@ -142,6 +156,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Heal(int amount)
+    {
+        health += amount;
+
+        health = Mathf.Clamp(health, 0, 100);
+
+        if(hpBarSliderForPlayer != null)
+        {
+            float normalizedHealth = (float) health / 100f;
+        
+            hpBarSliderForPlayer.value = normalizedHealth;
+        }
+    }
 
     //HP bar for the Player
     void HealthBarForPlayer()
@@ -157,7 +184,7 @@ public class PlayerController : MonoBehaviour
 
 
     void ShootBullet()
-    { 
+    {
 
 
         // Check if enough time has passed since the last shot
@@ -176,6 +203,9 @@ public class PlayerController : MonoBehaviour
                 // Instantiate the bullet at the center of the screen
                 GameObject bullet = Instantiate(bulletPrefab, ray.origin, Quaternion.identity);
 
+              //  float bulletSize = GetBulletSize(currentWeaponType);
+                bullet.transform.localScale *= bulletSize;
+
                 Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
                 if (bulletRb != null)
@@ -183,40 +213,47 @@ public class PlayerController : MonoBehaviour
                     // Adjust properties based on the current weapon type
                     switch (currentWeaponType)
                     {
+// ---------- I added the damage values of the weapons to the monsters it was easier to do it this way due to how we have them coded to take damage
+                        
                         case WeaponTypes.WeaponNormal:
                             bulletSpeed = 50f;
                             shootingInterval = 0.8f;
-                            am.PLAY_SOUND_ONCE(1);
+                            bulletSize = 1.0f;
+                            //am.PLAY_SOUND_ONCE(1);    cann add these back if we add sound controller to the player, otherwise this causes issues to shotting
                             // Other properties for Normal weapon...
                             break;
 
-                        case WeaponTypes.WeaponBetter:
-                            bulletSpeed = 100f;
-                            shootingInterval = 0.6f;
-                            am.PLAY_SOUND_ONCE(2);
+                        case WeaponTypes.WeaponBetter:  // Rifle
+                            bulletSpeed = 150f;
+                            shootingInterval = 0.3f;
+                            bulletSize = 1.0f;
+                            // am.PLAY_SOUND_ONCE(2);
                             // Other properties for Better weapon...
                             break;
 
-                        case WeaponTypes.WeaponGood:
-                            bulletSpeed =150f;
-                            shootingInterval = 0.4f;
-                            am.PLAY_SOUND_ONCE(3);
+                        case WeaponTypes.WeaponGood:    // Sniper
+                            bulletSpeed = 2000f;
+                            shootingInterval = 0.8f;
+                            bulletSize = .5f;
+                            //   am.PLAY_SOUND_ONCE(3);
                             // Other properties for Good weapon...
                             break;
 
-                        case WeaponTypes.WeaponBest:
-                            bulletSpeed = 20f;
-                            shootingInterval = 0.2f;
+                        case WeaponTypes.WeaponBest:    // Shotgun
+                            bulletSpeed = 100f;
+                            shootingInterval = 0.5f;
+                            bulletSize = 5.0f;
                             //Download better sound for this if we implement this type of weapon
-                            am.PLAY_SOUND_ONCE(1);
+                            //    am.PLAY_SOUND_ONCE(1);
                             // Other properties for Best weapon...
                             break;
 
-                        case WeaponTypes.WeaponGOAT:
+                        case WeaponTypes.WeaponGOAT:    // Stupid Op weapon i made lol
                             bulletSpeed = 250f;
                             shootingInterval = 0.1f;
+                            bulletSize = 2.0f;
                             //Download better sound for this if we implement this type of weapon
-                            am.PLAY_SOUND_ONCE(1);
+                            //   am.PLAY_SOUND_ONCE(1);
                             // Other properties for GOAT weapon...
                             break;
 
@@ -228,14 +265,14 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 bulletVelocity = ray.direction * bulletSpeed;
                     bulletRb.velocity = bulletVelocity;
-                    muzzleFlash.Play();
-
 
                     // Set the rotation of the bullet to match its velocity
                     bullet.transform.rotation = Quaternion.LookRotation(bulletVelocity);
 
                     // Destroy the bullet after the specified lifetime
                     Destroy(bullet, bulletLifetime);
+
+                    muzzleFlash.Play();
                 }
                 else
                 {
@@ -250,39 +287,43 @@ public class PlayerController : MonoBehaviour
             // Update the last shot time
             lastShotTime = Time.time;
         }
-    
+
     }
 
     void OnTriggerEnter(Collider col)
     {
-        
+
         switch (col.gameObject.tag)
         {
             case "WeaponBetter":
                 scoring.sendMessageToUI("Better weapon picked up! ");
-                currentWeaponType = WeaponTypes.WeaponBetter;
-                ActivateWeapon(WeaponTypes.WeaponBetter);
+                //currentWeaponType = WeaponTypes.WeaponBetter;
+               // ActivateWeapon(WeaponTypes.WeaponBetter);
+                SetPlayerWeapon(WeaponTypes.WeaponBetter);
                 Destroy(col.gameObject);
                 break;
 
             case "WeaponGood":
                 scoring.sendMessageToUI("Good weapon picked up! ");
-                currentWeaponType = WeaponTypes.WeaponGood;
-                ActivateWeapon(WeaponTypes.WeaponGood);
+             //   currentWeaponType = WeaponTypes.WeaponGood;
+            //    ActivateWeapon(WeaponTypes.WeaponGood);
+                SetPlayerWeapon(WeaponTypes.WeaponGood);
                 Destroy(col.gameObject);
                 break;
 
             case "WeaponBest":
                 scoring.sendMessageToUI("Best weapon picked up! ");
-                currentWeaponType = WeaponTypes.WeaponBest;
-                ActivateWeapon(WeaponTypes.WeaponBest);
+             //   currentWeaponType = WeaponTypes.WeaponBest;
+             //   ActivateWeapon(WeaponTypes.WeaponBest);
+                SetPlayerWeapon(WeaponTypes.WeaponBest);
                 Destroy(col.gameObject);
                 break;
 
             case "WeaponGOAT":
                 scoring.sendMessageToUI("GOAT weapon picked up! ");
-                currentWeaponType = WeaponTypes.WeaponGOAT;
-                ActivateWeapon(WeaponTypes.WeaponGOAT);
+              //  currentWeaponType = WeaponTypes.WeaponGOAT;
+             //   ActivateWeapon(WeaponTypes.WeaponGOAT);
+                SetPlayerWeapon(WeaponTypes.WeaponGOAT);
                 Destroy(col.gameObject);
                 break;
 
@@ -290,7 +331,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         //Debug.Log("CurrentWeaponType : " + currentWeaponType);
-        
+
         //if (col.gameObject.tag == "WeaponBetter")
         //{
 
@@ -305,6 +346,7 @@ public class PlayerController : MonoBehaviour
     void ActivateWeapon(WeaponTypes weaponType)
     {
         currentWeaponType = weaponType;
+       // currentWeaponType = GameManager.instance.playerCurrentWeapon;
 
         GameObject[] weaponObjects ={
             WeaponNormal,
@@ -326,34 +368,15 @@ public class PlayerController : MonoBehaviour
             {
                 weaponObject.SetActive(true);
             }
-           
+
             //Debug.Log(weaponObject.ToString()) ;
         }
-       
-        // Activate the selected weapon object
-        GameObject selectedWeaponObject = GameObject.FindGameObjectWithTag(weaponType.ToString());
-        //Debug.Log("selectedWeaponObject is: "+selectedWeaponObject.ToString());  //rifle
-
-        switch (selectedWeaponObject.ToString())
-        {
-            case "rifle":
-                WeaponBetter.SetActive(true);
-                break;
-            //case "game object's name for weapontGood":
-            //    WeaponGood.SetActive(true);
-            //    break;
-            //case "game object's name for weapontBest":
-            //    WeaponBest.SetActive(true);
-            //    break;
-            //case "game object's name for weapontGOAT":
-            //    WeaponGOAT.SetActive(true);
-            //    break;
-
-            default:
-                break;
-        }
-   
     }
+
+    void SetPlayerWeapon(WeaponTypes newWeaponType)
+    {
+        GameManager.instance.playerCurrentWeapon = newWeaponType;
+        ActivateWeapon(newWeaponType);
+    }
+   
 }
-
-

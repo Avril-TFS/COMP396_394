@@ -95,7 +95,7 @@ public class Scoring : MonoBehaviour
         //show gameClear screen
         gameClear.SetActive(true);
         //Slow down the scene
-        Time.timeScale = 0.5f;
+        //Time.timeScale = 0.5f;
     }
     public void LOAD_MENU()
     {

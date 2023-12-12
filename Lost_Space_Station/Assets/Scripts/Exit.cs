@@ -12,7 +12,7 @@ public class Exit : MonoBehaviour
             int currentScene = SceneManager.GetActiveScene().buildIndex;
             int nextScene = currentScene + 1;
 
-            if(nextScene < SceneManager.sceneCountInBuildSettings)
+            if (nextScene < SceneManager.sceneCountInBuildSettings)
             {
                 SceneManager.LoadScene(nextScene);
             }

@@ -13,9 +13,9 @@ public class ProwlerController : MonoBehaviour
     public int currentWaypoint = 0;
 
     public Transform player;
-    public float chaseDistance = 10.0f;
+    public float chaseDistance = 15.0f;
     public float speed = 3f;
-    public float FOV = 80f;
+    public float FOV = 90f;
     public float rotationSpeed = 1000f;
     Scoring scoring;
     //For HP bar - Slider is a child of Robot
@@ -24,9 +24,9 @@ public class ProwlerController : MonoBehaviour
     //for level3 attacking/damage
     Scene currentScene;
     PlayerController playerController;
-    public int damage = 10;
+    public int damage = 20;
     private float currentHealth;
-    public float health = 100;
+    public float health = 1000;
     bool enraged = false;
     public GameObject key;
     public GameObject explosion;
@@ -227,7 +227,7 @@ public class ProwlerController : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage)
+    /*void TakeDamage(int damage)
     {
         currentHealth -= damage;
         scoring.score += damage;
@@ -250,6 +250,62 @@ public class ProwlerController : MonoBehaviour
             Die();
         }
 
+    }*/
+
+    private void TakeDamage(int playerDamage)
+    {
+        currentHealth -= playerDamage;
+        scoring.score += playerDamage;
+        scoring.sendMessageToUI("Hit enemy");
+        state = ProwlerState.Chase;
+
+        // Update HP bar value  
+        if (hpBarSlider != null)
+        {
+            hpBarSlider.value = currentHealth / health;
+        }
+
+        // Check if the enemy's health has reached 0
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    int GetPlayerDamageFromBullet(GameObject bullet)
+    {
+        int playerDamage;
+
+        WeaponTypes playerWeaponType = playerController.currentWeaponType;
+
+        switch (playerWeaponType)
+        {
+            case WeaponTypes.WeaponNormal:
+                playerDamage = 20;
+                break;
+
+            case WeaponTypes.WeaponBetter:
+                playerDamage = 20;
+                break;
+
+            case WeaponTypes.WeaponGood:
+                playerDamage = 75;
+                break;
+
+            case WeaponTypes.WeaponBest:
+                playerDamage = 50;
+                break;
+
+            case WeaponTypes.WeaponGOAT:
+                playerDamage = 100;
+                break;
+
+            default:
+                playerDamage = 20;
+                break;
+        }
+
+        return playerDamage;
     }
 
     void Die()

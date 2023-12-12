@@ -17,14 +17,14 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     public float closeEnoughSenseCutoff = 10; //if (d(G,E) <=15m) - close enough to start chasing 
     public float strength = 5; //[0,100]
     public float health = 100;   //
-    private float currentHealth;  
+    private float currentHealth;
     public float speed = 2; //2 m/s
     Scoring scoring;
-    public int killPoints = 200; 
+    public int killPoints = 200;
     PlayerController playerController;
     float timer = 0;
     public bool isAttacking = false;
-    public int damage = 50;
+    public int damage = 10;
     public float attackRate = 4f; //attacks every 4 seconds
     //For HP bar - Slider is a child of small Enemy
     private Slider hpBarSlider;
@@ -45,8 +45,8 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         if (!enemy)
         {
             enemy = GameObject.FindGameObjectWithTag("Player");
-        } 
-        
+        }
+
         //For enemy's HP
         currentHealth = health;
 
@@ -56,7 +56,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
         cosMonsterFOVover2InRad = Mathf.Cos(monsterFOV / 2f * Mathf.Deg2Rad); // in Rad
         stateMachine = new StateMachine();
-        
+
         idle = stateMachine.CreateState("Idle"); //var lets the compiler detect the type
         //idle.onEnter = delegate { Debug.Log("idle.onEnter"); };
         //idle.onExit = delegate { Debug.Log("idle.onExit"); };
@@ -87,20 +87,20 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
         timer += Time.deltaTime;
 
-       
+
 
 
         if (health <= 0)
         {
-            Die(); 
+            Die();
         }
 
         // Debug.Log("SenseEnemy true?"+ SenseEnemy(this.transform.position, enemy.transform.position, this.transform.forward, cosMonsterFOVover2InRad, closeEnoughSenseCutoff));
         //Debug.Log("Position of small enemy"+this.transform.position);
         //Debug.Log("Position of Player" + enemy.transform.position);
-       
-           
-      
+
+
+
     }
 
     void RotateEnemy360()
@@ -116,7 +116,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     void IdleOnFrame()
     {
         //Debug.Log("Idle.onFrame");
-        
+
         Idle();
 
         //Idle -> chase (T1)
@@ -203,14 +203,14 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     void AttackOnFrame()
     {
 
-        if(isAttacking == false)
+        if (isAttacking == false)
         {
             // Look at the player when attacking
             transform.LookAt(enemy.transform);
-            Attack(); 
+            Attack();
         }
 
-      
+
 
         //Attack-> chase(T3) 
         if (isAttacking == true && !SenseEnemy(this.transform.position, enemy.transform.position, this.transform.forward, cosMonsterFOVover2InRad, closeEnoughSenseCutoff))
@@ -221,7 +221,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
         }
 
-   
+
 
     }
     private void Attack()
@@ -305,20 +305,21 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         // Check if the collision is with a bullet
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            int playerDamage = GetPlayerDamageFromBullet(collision.gameObject);
             //Debug.Log("Bullet hit");
-            TakeDamage(damage);
+            TakeDamage(playerDamage);
 
             // Destroy the bullet on impact
             Destroy(collision.gameObject);
         }
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage(int playerDamage)
     {
-        currentHealth -= damage;
-        scoring.score += damage;
+        currentHealth -= playerDamage;
+        scoring.score += playerDamage;
         scoring.sendMessageToUI("Hit enemy");
-
+        stateMachine.ChangeState(chase);
 
         // Update HP bar value  
         if (hpBarSlider != null)
@@ -331,5 +332,40 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         {
             Die();
         }
+    }
+    int GetPlayerDamageFromBullet(GameObject bullet)
+    {
+        int playerDamage;
+
+        WeaponTypes playerWeaponType = playerController.currentWeaponType;
+
+        switch (playerWeaponType)
+        {
+            case WeaponTypes.WeaponNormal:
+                playerDamage = 20;
+                break;
+
+            case WeaponTypes.WeaponBetter:
+                playerDamage = 20;
+                break;
+
+            case WeaponTypes.WeaponGood:
+                playerDamage = 75;
+                break;
+
+            case WeaponTypes.WeaponBest:
+                playerDamage = 50;
+                break;
+
+            case WeaponTypes.WeaponGOAT:
+                playerDamage = 100;
+                break;
+
+            default:
+                playerDamage = 20;
+                break;
+        }
+
+        return playerDamage;
     }
 }
