@@ -329,6 +329,7 @@ public class PlayerController : MonoBehaviour
 
             default:
                 break;
+
         }
         //Debug.Log("CurrentWeaponType : " + currentWeaponType);
 
@@ -341,6 +342,12 @@ public class PlayerController : MonoBehaviour
         //    currentWeaponType = WeaponTypes.better;
         //    Debug.Log("CurrentWeaponType : " + currentWeaponType);
         //}
+
+        if (col.gameObject.tag == "EnemyThrowObject")
+        {
+            Damage(10); 
+            Destroy(col.gameObject);
+        }
     }
 
     void ActivateWeapon(WeaponTypes weaponType)

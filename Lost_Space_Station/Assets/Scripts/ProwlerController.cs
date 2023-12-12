@@ -22,6 +22,7 @@ public class ProwlerController : MonoBehaviour
     private Slider hpBarSlider;
 
     //for level3 attacking/damage
+    [Header("Level 3 variables")]
     Scene currentScene;
     PlayerController playerController;
     public int damage = 20;
@@ -31,10 +32,19 @@ public class ProwlerController : MonoBehaviour
     public GameObject key;
     public GameObject explosion;
 
+    [Header("Throw Object variables")]
+    public GameObject throwObject;
+    public float throwDistance = 10.0f;
+    public int totalThrows = 100;
+    public float throwCooldown = 0.2f;
+    bool canThrow;
+    public float throwForce = 70;
+    public Transform attackPoint;
+
 
     private enum ProwlerState
     {
-        Patrol, Chase, Attack
+        Patrol, Chase, Attack, ThrowObject
     }
     private ProwlerState state;
 
@@ -64,6 +74,7 @@ public class ProwlerController : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         currentHealth = health;
+        canThrow = true; 
     }
 
     // Update is called once per frame
@@ -78,8 +89,39 @@ public class ProwlerController : MonoBehaviour
             case ProwlerState.Chase:
                 Chase();
                 break;
+
+            case ProwlerState.ThrowObject:
+                ThrowObject(); 
+                break;
         }
 
+    }
+
+    private void ThrowObject()
+    {
+        canThrow = false;
+        if (Vector3.Distance(transform.position, player.position) > throwDistance || totalThrows <=0)
+        {
+            state = ProwlerState.Chase;
+            return;
+        }
+        canThrow = false;
+        GameObject projectile = Instantiate(throwObject, attackPoint.transform.position, attackPoint.transform.rotation);
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+        Vector3 forcefulness = projectileRb.transform.forward * throwForce;
+
+        projectileRb.AddForce(forcefulness);
+        totalThrows--;
+
+        Destroy(projectile, 1);
+        state = ProwlerState.Chase;
+
+        Invoke(nameof(ResetThrow), throwCooldown);
+    }
+
+    private void ResetThrow()
+    {
+        canThrow = true;
     }
 
     void Patrol()
@@ -133,6 +175,11 @@ public class ProwlerController : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) > chaseDistance && !CanSee())
         {
             state = ProwlerState.Patrol;
+        }
+        if (Vector3.Distance(transform.position, player.position) < throwDistance && CanSee() && canThrow && totalThrows > 0)
+        {
+            state = ProwlerState.ThrowObject;
+            return;
         }
 
         UnityEngine.AI.NavMeshHit hit;
@@ -210,7 +257,7 @@ public class ProwlerController : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("Attacking, damage: " + damage);
+        //Debug.Log("Attacking, damage: " + damage);
 
         if (enraged)
         {
@@ -218,11 +265,12 @@ public class ProwlerController : MonoBehaviour
             scoring.sendMessageToUI("The robot is enranged. Damage and speed increased!");
             playerController.Damage(damage * 2);
             speed = 6f;
+            //Debug.Log("PlayerControll Damage called: " + damage);
         }
         else
         {
             playerController.Damage(damage);
-            Debug.Log("PlayerControll Damage called: " + damage);
+            //Debug.Log("PlayerControll Damage called: " + damage);
 
         }
     }
@@ -264,7 +312,11 @@ public class ProwlerController : MonoBehaviour
         {
             hpBarSlider.value = currentHealth / health;
         }
+        if (currentHealth <= health * .5)
+        {
+            enraged = true;
 
+        }
         // Check if the enemy's health has reached 0
         if (currentHealth <= 0)
         {

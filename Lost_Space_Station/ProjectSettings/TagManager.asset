@@ -14,6 +14,7 @@ TagManager:
   - WeaponGOAT
   - Key1
   - DeathPlane
+  - EnemyThrowObject
   layers:
   - Default
   - TransparentFX

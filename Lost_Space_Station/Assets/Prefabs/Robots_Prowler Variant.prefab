@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2468194399686243649
@@ -159,6 +159,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3186931774919172030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5053853012005300428}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5053853012005300428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186931774919172030}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.378, z: 1.121}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 208381269002209637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3414483754181249353
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,6 +673,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400050, guid: eba753e5d2c78cf418d638dc6261bb72, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5484336461607341573}
+    - targetCorrespondingSourceObject: {fileID: 400050, guid: eba753e5d2c78cf418d638dc6261bb72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5053853012005300428}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100050, guid: eba753e5d2c78cf418d638dc6261bb72, type: 3}
       insertIndex: -1
@@ -705,6 +739,12 @@ MonoBehaviour:
   health: 100
   key: {fileID: 155280, guid: 41d1cac196452694fb10f2476db79e6e, type: 3}
   explosion: {fileID: 2530325798995656046, guid: 38769bf60f14ac641b878a51ac74caba, type: 3}
+  throwObject: {fileID: 0}
+  throwDistance: 10
+  totalThrows: 0
+  throwCooldown: 0
+  throwForce: 0
+  attackPoint: {fileID: 0}
 --- !u!136 &7913546208394927695
 CapsuleCollider:
   m_ObjectHideFlags: 0
