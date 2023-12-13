@@ -46,10 +46,10 @@ public class Door : MonoBehaviour
                 Debug.Log("Clear level " + levelPassed);
 
             //When level 3 is cleared
-            if (levelPassed ==3)
-            {
-                SceneManager.LoadScene("Victory");
-            }
+            //if (levelPassed == 3)
+            //{
+            //    SceneManager.LoadScene("Victory");
+            //}
 
         }
 

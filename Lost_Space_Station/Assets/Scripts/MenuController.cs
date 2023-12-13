@@ -60,6 +60,7 @@ public class MenuController : MonoBehaviour
 
     public void LevelUnlock()
     {
+        Debug.Log("Level Passed = " + levelPassed);
         //Unlock 
         levelPassed = PlayerPrefs.GetInt("LevelPassed");
         level2Button.interactable = false;
@@ -71,6 +72,11 @@ public class MenuController : MonoBehaviour
                 level2Button.interactable = true;
                 break;
             case 2:
+                level2Button.interactable = true;
+                level3Button.interactable = true;
+                break;
+            case 3:
+                level1Button.interactable = true;
                 level2Button.interactable = true;
                 level3Button.interactable = true;
                 break;

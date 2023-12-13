@@ -8269,6 +8269,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3088452145797476477, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
+      propertyPath: m_Text
+      value: Grab a victory gem to win
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625801603113241444, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4772459817048992208, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
       propertyPath: m_Name
       value: UI
