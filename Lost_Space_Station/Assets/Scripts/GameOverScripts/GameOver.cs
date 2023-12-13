@@ -20,4 +20,10 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenuScene");
     }
+
+
+    public void LOAD_SCENE(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }

@@ -5424,6 +5424,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dbc4a26a10a1be94f89bd3175e570397, type: 3}
   - {fileID: 8300000, guid: 100ca942c4765aa44ad15f38449546ef, type: 3}
   - {fileID: 8300000, guid: 24f23167b46fc8c449da184945bbaaa8, type: 3}
+  - {fileID: 8300000, guid: 82680bbd88db6804da8313ea0696b219, type: 3}
 --- !u!1001 &1111355167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8623,7 +8624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79101f0c16a2b948b49aab59337536b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
+  respawnPoint: {fileID: 1045197611}
   damage: 25
 --- !u!64 &1644765246
 MeshCollider:
@@ -10784,7 +10785,7 @@ PrefabInstance:
     - target: {fileID: 8506646662294523441, guid: b090c74cf2eb6a44d94e9232d988b11d, type: 3}
       propertyPath: explosion
       value: 
-      objectReference: {fileID: 2530325798995656046, guid: 38769bf60f14ac641b878a51ac74caba, type: 3}
+      objectReference: {fileID: 2530325798995656046, guid: adbd126e9f336c44db5264003bbb80e7, type: 3}
     - target: {fileID: 8506646662294523441, guid: b090c74cf2eb6a44d94e9232d988b11d, type: 3}
       propertyPath: throwForce
       value: 1000

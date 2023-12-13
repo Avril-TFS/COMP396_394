@@ -26,12 +26,19 @@ public class MenuController : MonoBehaviour
     [Tooltip(" The amount of sound drop while 'loading' ")]
     public float soundDropAmountWhileLoading = 0.8f;
 
+    [Header("Levels")]
+    public Button level1Button, level2Button, level3Button;
+    int levelPassed;
+
+
     // Start is called before the first frame update
     void Start()
     {
         //DontDestroyOnLoad(this);
-       
-        m_AudioSource = GetComponent<AudioSource>();
+
+        LevelUnlock();
+
+         m_AudioSource = GetComponent<AudioSource>();
         
         //LOAD_PREFERENCES is not used at this point. 
         LOAD_PREFERENCES();
@@ -49,6 +56,27 @@ public class MenuController : MonoBehaviour
         }
 
         
+    }
+
+    public void LevelUnlock()
+    {
+        //Unlock 
+        levelPassed = PlayerPrefs.GetInt("LevelPassed");
+        level2Button.interactable = false;
+        level3Button.interactable = false;
+
+        switch (levelPassed)
+        {
+            case 1:
+                level2Button.interactable = true;
+                break;
+            case 2:
+                level2Button.interactable = true;
+                level3Button.interactable = true;
+                break;
+            default:
+                break;
+        }
     }
 
   

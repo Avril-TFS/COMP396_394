@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     //public float horizontalSensitivity;
     //public float verticalSensitivity;
 
-    public float mouseSensitivity = 10.0f;
+    public float mouseSensitivity = 2.5f;
     public Transform playerBody;
     private float XRotation = 0.0f;
 

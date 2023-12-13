@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public bool hasKey = false;
 
     AudioManager am;
+    AudioSource audioSource;
 
     public void HasKey()
     {
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
         playerBodyObject = GameObject.Find("PlayerBody");
         am = GameObject.Find("AudioController").GetComponent<AudioManager>();
+        audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
 
         //WeaponNormal = GameObject.FindGameObjectWithTag("WeaponNormal");
         //WeaponBetter = GameObject.FindGameObjectWithTag("WeaponBetter");
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
+            audioSource.Stop();
             Die();
         }
 
@@ -132,6 +135,7 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+       
         scoring.GameOver();
     }
 

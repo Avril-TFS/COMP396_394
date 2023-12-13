@@ -2564,6 +2564,9 @@ MonoBehaviour:
   slider: {fileID: 1549861355}
   loadingScenedurationSeconds: 4
   soundDropAmountWhileLoading: 0.8
+  level1Button: {fileID: 471259390}
+  level2Button: {fileID: 2053521215}
+  level3Button: {fileID: 2003051801}
 --- !u!4 &897723622
 Transform:
   m_ObjectHideFlags: 0

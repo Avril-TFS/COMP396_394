@@ -23126,7 +23126,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -23242,6 +23242,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dbc4a26a10a1be94f89bd3175e570397, type: 3}
   - {fileID: 8300000, guid: 100ca942c4765aa44ad15f38449546ef, type: 3}
   - {fileID: 8300000, guid: 24f23167b46fc8c449da184945bbaaa8, type: 3}
+  - {fileID: 8300000, guid: 82680bbd88db6804da8313ea0696b219, type: 3}
 --- !u!4 &1114020339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5931596411866037262, guid: 0bc39400e4d642945908074bc08930cd, type: 3}
@@ -44614,6 +44615,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2028862795}
+    - target: {fileID: 8506646662294523441, guid: b090c74cf2eb6a44d94e9232d988b11d, type: 3}
+      propertyPath: explosion
+      value: 
+      objectReference: {fileID: 2530325798995656046, guid: adbd126e9f336c44db5264003bbb80e7, type: 3}
     - target: {fileID: 8506646662294523441, guid: b090c74cf2eb6a44d94e9232d988b11d, type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
