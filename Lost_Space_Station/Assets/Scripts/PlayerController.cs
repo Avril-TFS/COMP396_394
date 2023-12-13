@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     AudioManager am;
     AudioSource audioSource;
 
+    
     public void HasKey()
     {
         hasKey = true;

@@ -85,7 +85,15 @@ public class MenuController : MonoBehaviour
         }
     }
 
-  
+    public void ResetPlayerPrefsValue(string key)
+    {
+        PlayerPrefs.DeleteKey(key);
+        PlayerPrefs.Save();
+
+        Debug.Log("Level Passed after Reset= " + levelPassed);
+        LOAD_SCENE("MainMenuScene");
+    }
+
 
 
     public void MusicToggleValueChanged()
@@ -198,9 +206,15 @@ public class MenuController : MonoBehaviour
 
     public void ExitButtonClicked()
     {
+        //#if UNITY_EDITOR
+        //#else
+        //    Application.Quit();
+        //#endif
+
 #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
-    Application.Quit();
+            Application.Quit();
 #endif
     }
 
