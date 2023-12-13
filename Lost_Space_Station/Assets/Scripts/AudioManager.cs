@@ -6,7 +6,7 @@ public  class AudioManager : MonoBehaviour
 {
     [Header("Sounds")]
     AudioSource m_AudioSource;
-    [Tooltip("Element0->keyPickUPsound, Element1->Gun1,Element2->Gun2,Element3->Gun3")]
+    [Tooltip("Element0->keyPickUPsound, Element1->Gun1,Element2->Gun2,Element3->Gun3, Element4->PickupHealthSound, Element5-> gunPickedUp")]
     public AudioClip[] sfxClips;
 
     // Start is called before the first frame update

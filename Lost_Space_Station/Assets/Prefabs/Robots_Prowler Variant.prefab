@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2468194399686243649
@@ -739,12 +739,12 @@ MonoBehaviour:
   health: 100
   key: {fileID: 155280, guid: 41d1cac196452694fb10f2476db79e6e, type: 3}
   explosion: {fileID: 2530325798995656046, guid: 38769bf60f14ac641b878a51ac74caba, type: 3}
-  throwObject: {fileID: 0}
+  throwObject: {fileID: 3915022213321424220, guid: 6e6af6760b01efe419ce507165ce0dbe, type: 3}
   throwDistance: 10
   totalThrows: 0
-  throwCooldown: 0
-  throwForce: 0
-  attackPoint: {fileID: 0}
+  throwCooldown: 2
+  throwForce: 1
+  attackPoint: {fileID: 5053853012005300428}
 --- !u!136 &7913546208394927695
 CapsuleCollider:
   m_ObjectHideFlags: 0

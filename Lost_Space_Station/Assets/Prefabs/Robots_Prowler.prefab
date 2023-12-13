@@ -1478,6 +1478,16 @@ MonoBehaviour:
   speed: 3
   FOV: 80
   rotationSpeed: 1000
+  damage: 20
+  health: 1000
+  key: {fileID: 4462554099159454385, guid: 938b7ae7aa4c13d4489d4c944de43278, type: 3}
+  explosion: {fileID: 0}
+  throwObject: {fileID: 3915022213321424220, guid: 6e6af6760b01efe419ce507165ce0dbe, type: 3}
+  throwDistance: 10
+  totalThrows: 100
+  throwCooldown: 0.2
+  throwForce: 70
+  attackPoint: {fileID: 0}
 --- !u!136 &2853458334034926106
 CapsuleCollider:
   m_ObjectHideFlags: 0

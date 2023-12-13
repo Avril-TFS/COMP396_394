@@ -6,7 +6,7 @@ public class VictoryCamera : MonoBehaviour
 {
     float speed = 5.0f;
 
-    public Vector3 start = new Vector3(0f,-45f,0f);
+    public Vector3 start = new Vector3(0f, -45f, 0f);
     public Vector3 end = new Vector3(0f, 45f, 0f);
 
     private bool rotateFinished = true;
@@ -26,7 +26,7 @@ public class VictoryCamera : MonoBehaviour
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(swapDirection), rotate);
 
-        if(Quaternion.Euler(swapDirection) == transform.rotation)
+        if (Quaternion.Euler(swapDirection) == transform.rotation)
         {
             rotateFinished = !rotateFinished;
         }

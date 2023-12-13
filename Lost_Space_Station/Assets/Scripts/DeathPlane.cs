@@ -16,7 +16,7 @@ public class DeathPlane : MonoBehaviour
             {
                 playerController.Damage(damage);
             }
-            if(respawnPoint != null)
+            if (respawnPoint != null)
             {
                 col.transform.position = respawnPoint.position;
                 col.attachedRigidbody.velocity = Vector3.zero;

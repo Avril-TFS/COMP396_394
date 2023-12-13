@@ -8,12 +8,14 @@ public class Medkit : MonoBehaviour
     public float rotationSpeed = 10.0f;
     public int healing = 50;
     Scoring scoring;
+    AudioManager am;
 
 
     // Start is called before the first frame update
     void Start()
     {
         scoring = GameObject.Find("UI").GetComponent<Scoring>();
+        am = GameObject.Find("AudioController").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -24,14 +26,15 @@ public class Medkit : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
             //Should play picking up sound later
+            am.PLAY_SOUND_ONCE(4);
             scoring.sendMessageToUI("Health increased!");
             Destroy(gameObject);
-            
+
             PlayerController playerController = col.GetComponent<PlayerController>();
-            if(playerController != null)
+            if (playerController != null)
             {
                 playerController.Heal(healing);
             }

@@ -77,7 +77,9 @@ public class PlayerController : MonoBehaviour
         //WeaponGOAT = GameObject.FindGameObjectWithTag("WeaponGOAT");
 
         //ActivateWeapon(WeaponTypes.WeaponNormal);
+        Debug.Log("current weapon type is : " + currentWeaponType);
         currentWeaponType = GameManager.instance.playerCurrentWeapon;
+        
         ActivateWeapon(currentWeaponType);
 
         //Activate this line below for debugging if needed 
@@ -210,6 +212,7 @@ public class PlayerController : MonoBehaviour
 
                 if (bulletRb != null)
                 {
+                    
                     // Adjust properties based on the current weapon type
                     switch (currentWeaponType)
                     {
@@ -219,7 +222,7 @@ public class PlayerController : MonoBehaviour
                             bulletSpeed = 50f;
                             shootingInterval = 0.8f;
                             bulletSize = 1.0f;
-                            //am.PLAY_SOUND_ONCE(1);    cann add these back if we add sound controller to the player, otherwise this causes issues to shotting
+                            am.PLAY_SOUND_ONCE(1);    //cann add these back if we add sound controller to the player, otherwise this causes issues to shotting
                             // Other properties for Normal weapon...
                             break;
 
@@ -227,7 +230,7 @@ public class PlayerController : MonoBehaviour
                             bulletSpeed = 150f;
                             shootingInterval = 0.3f;
                             bulletSize = 1.0f;
-                            // am.PLAY_SOUND_ONCE(2);
+                            am.PLAY_SOUND_ONCE(2);
                             // Other properties for Better weapon...
                             break;
 
@@ -235,7 +238,7 @@ public class PlayerController : MonoBehaviour
                             bulletSpeed = 2000f;
                             shootingInterval = 0.8f;
                             bulletSize = .5f;
-                            //   am.PLAY_SOUND_ONCE(3);
+                            am.PLAY_SOUND_ONCE(3);
                             // Other properties for Good weapon...
                             break;
 
@@ -244,7 +247,7 @@ public class PlayerController : MonoBehaviour
                             shootingInterval = 0.5f;
                             bulletSize = 5.0f;
                             //Download better sound for this if we implement this type of weapon
-                            //    am.PLAY_SOUND_ONCE(1);
+                            am.PLAY_SOUND_ONCE(1);
                             // Other properties for Best weapon...
                             break;
 
@@ -253,7 +256,7 @@ public class PlayerController : MonoBehaviour
                             shootingInterval = 0.1f;
                             bulletSize = 2.0f;
                             //Download better sound for this if we implement this type of weapon
-                            //   am.PLAY_SOUND_ONCE(1);
+                            am.PLAY_SOUND_ONCE(3);
                             // Other properties for GOAT weapon...
                             break;
 
@@ -292,7 +295,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-
+       
         switch (col.gameObject.tag)
         {
             case "WeaponBetter":
@@ -300,6 +303,7 @@ public class PlayerController : MonoBehaviour
                 //currentWeaponType = WeaponTypes.WeaponBetter;
                // ActivateWeapon(WeaponTypes.WeaponBetter);
                 SetPlayerWeapon(WeaponTypes.WeaponBetter);
+                am.PLAY_SOUND_ONCE(5);
                 Destroy(col.gameObject);
                 break;
 
@@ -308,6 +312,7 @@ public class PlayerController : MonoBehaviour
              //   currentWeaponType = WeaponTypes.WeaponGood;
             //    ActivateWeapon(WeaponTypes.WeaponGood);
                 SetPlayerWeapon(WeaponTypes.WeaponGood);
+                am.PLAY_SOUND_ONCE(5);
                 Destroy(col.gameObject);
                 break;
 
@@ -316,6 +321,7 @@ public class PlayerController : MonoBehaviour
              //   currentWeaponType = WeaponTypes.WeaponBest;
              //   ActivateWeapon(WeaponTypes.WeaponBest);
                 SetPlayerWeapon(WeaponTypes.WeaponBest);
+                am.PLAY_SOUND_ONCE(5);
                 Destroy(col.gameObject);
                 break;
 
@@ -324,6 +330,7 @@ public class PlayerController : MonoBehaviour
               //  currentWeaponType = WeaponTypes.WeaponGOAT;
              //   ActivateWeapon(WeaponTypes.WeaponGOAT);
                 SetPlayerWeapon(WeaponTypes.WeaponGOAT);
+                am.PLAY_SOUND_ONCE(5);
                 Destroy(col.gameObject);
                 break;
 
