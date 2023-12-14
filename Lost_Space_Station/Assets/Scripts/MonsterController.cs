@@ -95,12 +95,6 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
             Die();
         }
 
-        // Debug.Log("SenseEnemy true?"+ SenseEnemy(this.transform.position, enemy.transform.position, this.transform.forward, cosMonsterFOVover2InRad, closeEnoughSenseCutoff));
-        //Debug.Log("Position of small enemy"+this.transform.position);
-        //Debug.Log("Position of Player" + enemy.transform.position);
-
-
-
     }
 
     void RotateEnemy360()
@@ -115,7 +109,6 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     //FSM ***************************************************************************
     void IdleOnFrame()
     {
-        //Debug.Log("Idle.onFrame");
 
         Idle();
 
@@ -212,8 +205,16 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
 
 
 
-        //Attack-> chase(T3) 
+        //Attack-> chase(T3)  if the player is not within attack range
         if (isAttacking == true && !SenseEnemy(this.transform.position, enemy.transform.position, this.transform.forward, cosMonsterFOVover2InRad, closeEnoughSenseCutoff))
+        {
+            isAttacking = false;
+            stateMachine.ChangeState(chase);
+            //Debug.Log("No longer in attack range, start chasing again");
+
+        }
+        //Attack-> chase(T3)  if the player is not within sense range
+        if (isAttacking == true && !SenseEnemy(this.transform.position, enemy.transform.position, this.transform.forward, cosMonsterFOVover2InRad, closeEnoughAttackCutoff))
         {
             isAttacking = false;
             stateMachine.ChangeState(chase);
@@ -228,7 +229,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     {
         isAttacking = true;
 
-        //Real attack movement to be implemented later
+       
 
         //create timer so attack happens every x seconds 
         //if (timer > attackRate)
@@ -238,6 +239,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         //}
 
         playerController.Damage(damage);
+        Debug.Log("Took " + damage +" damage From Monster" );
 
     }
 

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 
 public enum WeaponTypes{
     WeaponNormal, WeaponBetter, WeaponGood, WeaponBest, WeaponGOAT
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
     //for the bullet
     public Transform shootPoint;
     public GameObject bulletPrefab;
+  
     //Bullet performance
     public float shootingInterval = 0.8f;
     public float bulletSpeed = 10f; // Set your default bullet speed here
@@ -37,8 +40,9 @@ public class PlayerController : MonoBehaviour
     public GameObject WeaponGOAT;
 
     public ParticleSystem muzzleFlash;
-    private Slider hpBarSliderForPlayer;
-
+    
+    public GameObject hpBarSliderForPlayer;
+    private Slider hpSlider;
     // This is for keys---------------
     public bool hasKey = false;
 
@@ -152,6 +156,7 @@ public class PlayerController : MonoBehaviour
         // Update HP bar value  
         if (hpBarSliderForPlayer != null)
         {
+            Debug.Log("Took " + amount + " damage From Player Controller");
             // Ensure that the health value stays within the range [0, 100]
             health = Mathf.Clamp(health, 0, 100);
 
@@ -159,7 +164,7 @@ public class PlayerController : MonoBehaviour
             float normalizedHealth = (float)health / 100f;
 
             // Update the slider value
-            hpBarSliderForPlayer.value = normalizedHealth;
+            hpSlider.value = normalizedHealth;
         }
     }
 
@@ -172,20 +177,23 @@ public class PlayerController : MonoBehaviour
         if(hpBarSliderForPlayer != null)
         {
             float normalizedHealth = (float) health / 100f;
-        
-            hpBarSliderForPlayer.value = normalizedHealth;
+
+            hpSlider.value = normalizedHealth;
         }
     }
 
     //HP bar for the Player
     void HealthBarForPlayer()
     {
-        GameObject Canvas = GameObject.Find("Canvas");
-        if (Canvas != null)
-        {
-            hpBarSliderForPlayer = Canvas.GetComponentInChildren<Slider>();
-            //Debug.Log("hpBarSliderForPlayer assigned: " + (hpBarSliderForPlayer != null));
-        }
+        //GameObject Canvas = GameObject.Find("Canvas");
+        //if (Canvas != null)
+        //{
+        //    hpBarSliderForPlayer = Canvas.GetComponentInChildren<Slider>();
+        //    //Debug.Log("hpBarSliderForPlayer assigned: " + (hpBarSliderForPlayer != null));
+        //}
+        hpSlider = hpBarSliderForPlayer.GetComponent<Slider>();
+         
+
     }
 
 

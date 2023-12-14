@@ -1986,23 +1986,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b4141ff278aa944e95d5357a1b9ad86, type: 3}
---- !u!1 &186269189
+--- !u!1 &186269189 stripped
 GameObject:
-  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 6238088547283242104, guid: 3a4888c72fc545c4d96b555e9642c1b0, type: 3}
   m_PrefabInstance: {fileID: 6877813429575101578}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 186269191}
-  - component: {fileID: 186269190}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &186269190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2016,21 +2004,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCurrentWeapon: 0
---- !u!4 &186269191
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 7695599467042990942, guid: 3a4888c72fc545c4d96b555e9642c1b0, type: 3}
-  m_PrefabInstance: {fileID: 6877813429575101578}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186269189}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1698294, y: 5.6444674, z: 15.047052}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &188490329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13825,6 +13798,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4803463093519170, guid: 0150c0006494bd84198ac13cd4d0d7f5, type: 3}
   m_PrefabInstance: {fileID: 1965618679}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1977204431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 978536286511459856, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
+  m_PrefabInstance: {fileID: 8665010109606080666}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1979366823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15402,6 +15380,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141459078179823287, guid: bbd0dee8d8d4636489039db0eecab035, type: 3}
+      propertyPath: hpBarSliderForPlayer
+      value: 
+      objectReference: {fileID: 1977204431}
     - target: {fileID: 6350585514474242458, guid: bbd0dee8d8d4636489039db0eecab035, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.41

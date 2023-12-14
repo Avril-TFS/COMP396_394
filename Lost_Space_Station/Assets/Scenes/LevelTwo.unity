@@ -30187,6 +30187,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141459078179823287, guid: bbd0dee8d8d4636489039db0eecab035, type: 3}
+      propertyPath: hpBarSliderForPlayer
+      value: 
+      objectReference: {fileID: 1562580371}
     - target: {fileID: 6350585514474242458, guid: bbd0dee8d8d4636489039db0eecab035, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.41
@@ -33092,6 +33096,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
+--- !u!1 &1562580371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 978536286511459856, guid: 93f7a2682d9fc9d4c8fb6fff5ee97f53, type: 3}
+  m_PrefabInstance: {fileID: 1562580370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1564772883
 PrefabInstance:
   m_ObjectHideFlags: 0
