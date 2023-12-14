@@ -359,6 +359,7 @@ public class PlayerController : MonoBehaviour
         {
             Damage(10); 
             Destroy(col.gameObject);
+
         }
     }
 
