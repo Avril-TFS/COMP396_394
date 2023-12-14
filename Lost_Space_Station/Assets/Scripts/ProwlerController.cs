@@ -41,6 +41,7 @@ public class ProwlerController : MonoBehaviour
     public float throwForce = 70;
     public Transform attackPoint;
 
+    AudioManager am;
 
     private enum ProwlerState
     {
@@ -74,7 +75,15 @@ public class ProwlerController : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         currentHealth = health;
-        canThrow = true; 
+        canThrow = true;
+
+        am = GameObject.Find("AudioController").GetComponent<AudioManager>();
+
+
+        if (currentScene.name == "LevelThree")
+        {
+            scoring.sendMessageToUI("Defeat the robot to escape!");
+        }
     }
 
     // Update is called once per frame
@@ -109,6 +118,7 @@ public class ProwlerController : MonoBehaviour
         GameObject projectile = Instantiate(throwObject, attackPoint.transform.position, attackPoint.transform.rotation);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
         Vector3 forcefulness = projectileRb.transform.forward * throwForce;
+        am.PLAY_SOUND_ONCE(9);
 
         projectileRb.AddForce(forcefulness);
         totalThrows--;
@@ -258,6 +268,7 @@ public class ProwlerController : MonoBehaviour
     void Attack()
     {
         //Debug.Log("Attacking, damage: " + damage);
+        am.PLAY_SOUND_ONCE(8);
 
         if (enraged)
         {

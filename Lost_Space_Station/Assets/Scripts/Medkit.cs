@@ -29,7 +29,7 @@ public class Medkit : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             //Should play picking up sound later
-            am.PLAY_SOUND_ONCE(4);
+            am.PLAY_SOUND_ONCE(7);
             scoring.sendMessageToUI("Health increased!");
             Destroy(gameObject);
 

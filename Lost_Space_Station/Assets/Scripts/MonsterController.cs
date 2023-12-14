@@ -36,6 +36,8 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     UnityEngine.AI.NavMeshHit hit;
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
+    AudioManager am;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +78,9 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         //FSM Logie end************************
 
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        am = GameObject.Find("AudioController").GetComponent<AudioManager>();
+
     }
 
     // Update is called once per frame
@@ -229,7 +234,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
     {
         isAttacking = true;
 
-       
+
 
         //create timer so attack happens every x seconds 
         //if (timer > attackRate)
@@ -237,7 +242,7 @@ public class MonsterController : MonoBehaviour   //This is for small enemy movem
         //    playerController.Damage(damage);
         //    timer = 0;
         //}
-
+        am.PLAY_SOUND_ONCE(8);
         playerController.Damage(damage);
         Debug.Log("Took " + damage +" damage From Monster" );
 
